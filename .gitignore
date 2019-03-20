@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Game generated folders
+bin/
+dep/
