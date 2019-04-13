@@ -29,6 +29,33 @@ OBJ_FILES = $(addprefix $(BIN_PATH)/,$(notdir $(CPP_FILES:.cpp=.o)))
 
 EXEC = game
 
+ifeq ($(OS),Windows_NT)
+
+RMDIR = rd /s /q
+
+RM = del /q
+
+SDL_PATHS = C:/SDL2/x86_64-w64-mingw32 C:/Tools/msys64/mingw64
+
+SDL_INC_PATH += $(addsuffix /include,$(SDL_PATHS))
+LINK_PATH = $(addprefix -L,$(addsuffix /lib,$(SDL_PATHS)))
+FLAGS += -mwindows
+DFLAGS += -mconsole
+LIBS := -lmngw32 -lSDL2main $(LIBS)
+
+EXEC := $(EXEC).exe
+
+else
+
+UNAME_S := $(shell uname -s)
+
+ifeq ($(UNAME_S), Darwin)
+
+LIBS = -lm -framework SDL2 -framework SDL2_image -framework SDL2_mixer -framework SDL2_ttf
+
+endif
+endif
+
 all: $(EXEC)
 
 $(EXEC): $(OBJ_FILES)
@@ -42,6 +69,9 @@ $(DEP_PATH)/%.d: $(SRC_PATH)/%.cpp | folders
 
 .PRECIOUS: $(DEP_FILES)
 .PHONY: release debug clean folders help
+
+run:
+		./$(EXEC)
 
 clean:
 		-$(RMDIR) $(DEP_PATH)
