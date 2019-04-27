@@ -13,10 +13,12 @@ private:
   int width;
   int height;
 
+public:
   Rect();
   Rect(int x, int y, int width, int height);
 
-public:
+  int GetXPosition();
+  int GetYPosition();
   /*
   Basic vector operations such as:
     Sum and subtraction

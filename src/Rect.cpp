@@ -13,3 +13,11 @@ Rect::Rect(int x, int y, int width, int height) {
   this->width = width;
   this->height = height;
 }
+
+int Rect::GetXPosition() {
+  return(this->x);
+}
+
+int Rect::GetYPosition() {
+  return(this->y);
+}
