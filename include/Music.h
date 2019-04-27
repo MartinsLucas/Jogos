@@ -2,7 +2,6 @@
 #define MUSIC_H
 
 #include <iostream>
-#include <string>
 
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"

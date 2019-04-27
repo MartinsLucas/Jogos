@@ -2,7 +2,6 @@
 #define STATE_H
 
 #include <iostream>
-#include <string>
 
 #include "Sprite.h"
 #include "Music.h"
