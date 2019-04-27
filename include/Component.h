@@ -2,6 +2,7 @@
 #define COMPONENT_H
 
 #include <iostream>
+#include <string.h>
 
 #include "GameObject.h"
 
