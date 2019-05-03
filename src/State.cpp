@@ -52,21 +52,21 @@ void State::Update(float delta) {
 }
 
 void State::AddObject(int mouseX, int mouseY) {
-  // GameObject *object = new GameObject();
-  // Sprite *sprite = new Sprite(*object, "assets/img/penguinface.png");
-  // Sound *sound = new Sound(*object, "assets/audio/boom.wav");
-  // Face *face = new Face(*object);
-  //
-  // object->box.SetXPosition(mouseX);
-  // object->box.SetYPosition(mouseY);
-  // object->box.SetWidth(sprite->GetWidth());
-  // object->box.SetHeight(sprite->GetHeight());
-  //
-  // object->AddComponent(sprite);
-  // object->AddComponent(sound);
-  // // object->AddComponent(face);
-  //
-  // this->objectArray.emplace_back(object);
+  GameObject *object = new GameObject();
+  Sprite *sprite = new Sprite(*object, "assets/img/penguinface.png");
+  Sound *sound = new Sound(*object, "assets/audio/boom.wav");
+  Face *face = new Face(*object);
+
+  object->box.SetXPosition(mouseX);
+  object->box.SetYPosition(mouseY);
+  object->box.SetWidth(sprite->GetWidth());
+  object->box.SetHeight(sprite->GetHeight());
+
+  object->AddComponent(sprite);
+  object->AddComponent(sound);
+  object->AddComponent(face);
+
+  this->objectArray.emplace_back(object);
 }
 
 bool State::QuitRequested() {
@@ -87,31 +87,31 @@ void State::Input() {
 			this->quitRequested = true;
 		}
 
-		// if(event.type == SDL_MOUSEBUTTONDOWN) {
-    //
-		// 	// Iterates backwards to always click on the object above
-		// 	for(int index = this->objectArray.size() - 1 ; index >= 0 ; --index) {
-		// 		GameObject* gameObject = (GameObject*) this->objectArray[index].get();
-    //
-		// 		if(gameObject->box.Contains( {(float)mouseX, (float)mouseY} ) ) {
-		// 			Face* face = (Face*)gameObject->GetComponent( "Face" );
-		// 			if ( nullptr != face ) {
-		// 				face->Damage(std::rand() % 10 + 10);
-		// 				// Gets out of the loop (we only wants to hit one time)
-		// 				break;
-		// 			}
-		// 		}
-		// 	}
-		// }
-		// if( event.type == SDL_KEYDOWN ) {
-		// 	if( event.key.keysym.sym == SDLK_ESCAPE ) {
-		// 		this->quitRequested = true;
-		// 	}
-		// 	else {
-		// 		Vec2 objectPosition = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
-		// 		AddObject((int)objectPosition.GetXPosition(), (int)objectPosition.GetYPosition());
-		// 	}
-		// }
+		if(event.type == SDL_MOUSEBUTTONDOWN) {
+
+			// Iterates backwards to always click on the object above
+			for(int index = this->objectArray.size() - 1 ; index >= 0 ; --index) {
+				GameObject* gameObject = (GameObject*) this->objectArray[index].get();
+
+				if(gameObject->box.Contains((float)mouseX, (float)mouseY) ) {
+					Face* face = (Face*)gameObject->GetComponent( "Face" );
+					if ( nullptr != face ) {
+						face->Damage(std::rand() % 10 + 10);
+						// Gets out of the loop (we only wants to hit one time)
+						break;
+					}
+				}
+			}
+		}
+		if( event.type == SDL_KEYDOWN ) {
+			if( event.key.keysym.sym == SDLK_ESCAPE ) {
+				this->quitRequested = true;
+			}
+			else {
+				// Vec2 objectPosition = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
+				AddObject(/*(int)objectPosition.GetXPosition(), (int)objectPosition.GetYPosition()*/0, 0);
+			}
+		}
 	}
 }
 // Third-party code end

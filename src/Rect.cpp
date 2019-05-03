@@ -14,6 +14,10 @@ Rect::Rect(int x, int y, int width, int height) {
   this->height = height;
 }
 
+bool Rect::Contains(float mouseX, float mouseY) {
+  return (true);
+}
+
 int Rect::GetXPosition() {
   return(this->x);
 }

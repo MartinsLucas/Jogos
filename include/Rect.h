@@ -23,6 +23,7 @@ public:
   void SetYPosition(int position);
   void SetWidth(int width);
   void SetHeight(int height);
+  bool Contains(float mouseX, float mouseY);
   /*
   Basic vector operations such as:
     Sum and subtraction
