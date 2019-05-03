@@ -21,3 +21,19 @@ int Rect::GetXPosition() {
 int Rect::GetYPosition() {
   return(this->y);
 }
+
+void Rect::SetXPosition(int position) {
+  this->x = position;
+}
+
+void Rect::SetYPosition(int position) {
+  this->y = position;
+}
+
+void Rect::SetWidth(int width) {
+  this->width = width;
+}
+
+void Rect::SetHeight(int height) {
+  this->height = height;
+}

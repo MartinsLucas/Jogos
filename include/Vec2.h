@@ -11,10 +11,12 @@ private:
   int x;
   int y;
 
+public:
   Vec2();
   Vec2(int x, int y);
 
-public:
+  int GetXPosition();
+  int GetYPosition();
   /*
   Basic vector operations such as:
     Sum and subtraction

@@ -19,6 +19,10 @@ public:
 
   int GetXPosition();
   int GetYPosition();
+  void SetXPosition(int position);
+  void SetYPosition(int position);
+  void SetWidth(int width);
+  void SetHeight(int height);
   /*
   Basic vector operations such as:
     Sum and subtraction
