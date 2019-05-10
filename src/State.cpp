@@ -35,8 +35,6 @@ void State::LoadAssets() {
 
   spriteObject->AddComponent(background);
   this->objectArray.emplace_back(spriteObject);
-
-  // this->music = Music("assets/audio/stageState.ogg");
 }
 
 void State::Update(float delta) {
@@ -109,7 +107,7 @@ void State::Input() {
 			}
 			else {
 				// Vec2 objectPosition = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
-				AddObject(/*(int)objectPosition.GetXPosition(), (int)objectPosition.GetYPosition()*/0, 0);
+				AddObject(/*(int)objectPosition.GetXPosition(), (int)objectPosition.GetYPosition()*/(float)mouseX, (float)mouseY);
 			}
 		}
 	}

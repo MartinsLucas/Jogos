@@ -14,8 +14,17 @@ Rect::Rect(int x, int y, int width, int height) {
   this->height = height;
 }
 
-bool Rect::Contains(float mouseX, float mouseY) {
-  return (true);
+bool Rect::Contains(float xPosition, float yPosition) {
+  return this->WithinXLimits(xPosition) and this->WithinYLimits(yPosition);
+
+}
+
+bool Rect::WithinXLimits(float xPosition) {
+  return(this->x <= xPosition and xPosition <= (this->x + this->width));
+}
+
+bool Rect::WithinYLimits(float yPosition) {
+  return((this->y <= yPosition) and (yPosition <= (this->x + this->height)));
 }
 
 int Rect::GetXPosition() {

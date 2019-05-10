@@ -10,29 +10,29 @@ Sound::Sound(GameObject &associated, const char* file) : Sound(associated){
 }
 
 Sound::~Sound() {
-  this->Stop();
-  if(this->chunk != nullptr) {
-    Mix_FreeChunk(this->chunk);
-  } else {
-    printf("Can not free an unnexistant sound chunk!\n");
+  if(!Mix_Playing(this->channel)) {
+    this->Stop();
+    if(this->chunk != nullptr) {
+      Mix_FreeChunk(this->chunk);
+    } else {
+      printf("Can not free an unnexistant sound chunk!\n");
+    }
   }
 }
 
 void Sound::Stop(){
-  if(this->chunk != nullptr) {
-    Mix_HaltChannel(this->channel);
-  } else {
-    printf("There's no sound allocate yet!\n");
+  if(!Mix_Playing(this->channel)) {
+    if(this->chunk != nullptr) {
+      Mix_HaltChannel(this->channel);
+    } else {
+      printf("There's no sound allocate yet!\n");
+    }
   }
 }
 
-void Sound::Render() {
-  printf("Sound Rendered!\n");
-}
+void Sound::Render() {}
 
-void Sound::Update(float delta) {
-  printf("Sound Updated!\n");
-}
+void Sound::Update(float delta) {}
 
 void Sound::Play(int times){
   int newChannel = Mix_PlayChannel(this->channel, this->chunk, (times - 1));

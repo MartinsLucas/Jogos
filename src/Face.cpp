@@ -1,4 +1,5 @@
 #include "Face.h"
+#include <typeinfo>
 
 Face::Face(GameObject &associated) : Component(associated) {
   this->hitpoints = 30;
@@ -9,16 +10,22 @@ void Face::Damage(int damage) {
 
   if(this->hitpoints <= 0) {
     this->associated.RequestDelete();
+
+    Sound *sound = (Sound*)this->associated.GetComponent("Sound");
+
+    if (this->associated.IsDead()) {
+    }
+
+    if ( nullptr != sound ) {
+      sound->Play();
+    }
+
   }
 }
 
-void Face::Render() {
-  printf("Face Rendered!\n");
-}
+void Face::Render() {}
 
-void Face::Update(float delta) {
-  printf("Face Updated!\n");
-}
+void Face::Update(float delta) {}
 
 bool Face::Is(const char *type) {
   if (strcmp(type, "Face") == 0) {

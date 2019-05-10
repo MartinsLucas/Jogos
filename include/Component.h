@@ -10,7 +10,7 @@ using namespace std;
 
 class Component {
 protected:
-  GameObject associated;
+  GameObject &associated;
 
 public:
   Component(GameObject &associated);

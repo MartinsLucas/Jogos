@@ -37,9 +37,7 @@ void Sprite::Render() {
   }
 }
 
-void Sprite::Update(float delta) {
-  printf("Sprite Updated!\n");
-}
+void Sprite::Update(float delta) {}
 
 void Sprite::Open(const char *file) {
   if (this->texture != nullptr) {

@@ -27,5 +27,6 @@ public:
   void Open(const char *file);
   bool IsOpen();
   bool Is(const char *type);
+  bool CanStop();
 };
 #endif

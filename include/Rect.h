@@ -24,6 +24,8 @@ public:
   void SetWidth(int width);
   void SetHeight(int height);
   bool Contains(float mouseX, float mouseY);
+  bool WithinXLimits(float xPosition);
+  bool WithinYLimits(float yPosition);
   /*
   Basic vector operations such as:
     Sum and subtraction

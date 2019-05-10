@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Component.h"
+#include "Sound.h"
 
 using namespace std;
 
