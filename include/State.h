@@ -1,26 +1,37 @@
 #ifndef STATE_H
 #define STATE_H
+#define INCLUDE_SDL
+
+#include "SDL_include.h"
 
 #include <iostream>
-#include <string>
+#include <memory>
+#include <vector>
 
+#include "Vec2.h"
 #include "Sprite.h"
+#include "Face.h"
 #include "Music.h"
+#include "Sound.h"
+#include "GameObject.h"
 
 using namespace std;
 
 class State {
 private:
-  Sprite background;
   Music music;
   bool quitRequested;
+  std::vector<std::shared_ptr<GameObject>> objectArray;
 
 public:
   State();
+  ~State();
 
-  bool QuitRequested();
+  void Input();
+  void Render();
   void LoadAssets();
   void Update(float delta);
-  void Render();
+  void AddObject(int mouseX, int mouseY);
+  bool QuitRequested();
 };
 #endif

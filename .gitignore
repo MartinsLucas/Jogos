@@ -35,3 +35,6 @@ game
 # Game generated folders
 bin/
 dep/
+
+# Example files
+Example.*

@@ -1,11 +1,11 @@
 #include "Game.h"
 #include "Sprite.h"
 
-Sprite::Sprite() {
+Sprite::Sprite(GameObject& associated) : Component(associated) {
   this->texture = nullptr;
 }
 
-Sprite::Sprite(const char *file) {
+Sprite::Sprite(GameObject& associated, const char *file) : Component(associated) {
   this->texture = nullptr;
   this->Open(file);
 }
@@ -15,6 +15,29 @@ Sprite::~Sprite() {
     SDL_DestroyTexture(this->texture);
   }
 }
+
+void Sprite::Render() {
+  SDL_Rect destineRect = SDL_Rect {
+    this->associated.box.GetXPosition(),
+    this->associated.box.GetYPosition(),
+    this->clipRect.w,
+    this->clipRect.h
+  };
+
+  if (
+    SDL_RenderCopy(
+      Game::GetInstance().GetRenderer(),
+      this->texture,
+      &(this->clipRect),
+      &destineRect
+    ) != 0
+  ) {
+    printf("Couldn't render sprite!\n");
+    printf("%s\n", SDL_GetError());
+  }
+}
+
+void Sprite::Update(float delta) {}
 
 void Sprite::Open(const char *file) {
   if (this->texture != nullptr) {
@@ -41,22 +64,6 @@ void Sprite::SetClip(int x, int y, int width, int height) {
   this->clipRect = SDL_Rect {x, y, width, height};
 }
 
-void Sprite::Render(int x, int y) {
-  SDL_Rect destineRect = SDL_Rect {x, y, this->clipRect.w, this->clipRect.h};
-
-  if (
-    SDL_RenderCopy(
-      Game::GetInstance().GetRenderer(),
-      this->texture,
-      &(this->clipRect),
-      &destineRect
-    ) != 0
-  ) {
-    printf("Couldn't render sprite!\n");
-    printf("%s\n", SDL_GetError());
-  }
-}
-
 int Sprite::GetWidth() {
   return(this->width);
 }
@@ -70,6 +77,14 @@ bool Sprite::IsOpen() {
     return(true);
   }
   else {
+    return(false);
+  }
+}
+
+bool Sprite::Is(const char *type) {
+  if (strcmp(type, "Sprite") == 0) {
+    return(true);
+  } else {
     return(false);
   }
 }

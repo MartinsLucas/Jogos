@@ -7,9 +7,14 @@
 #include "Game.h"
 #include "State.h"
 
+#include <cstdlib>
+#include <ctime>
+
 Game *Game::instance = nullptr;
 
 Game::Game(const char *title, int width, int height) {
+  srand( (unsigned) time(NULL) );
+
   if (instance == nullptr) {
     instance = this;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) == 0) {
