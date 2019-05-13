@@ -19,7 +19,7 @@ public:
 
   int GetXValue();
   int GetYValue();
-  Vec2 GetRotated(float angle);
+  Vec2 Rotate(float radius, float angle);
 
   Vec2 operator+(const Vec2 &vec2);
   Vec2 operator+(const float &constant);
@@ -28,14 +28,11 @@ public:
   Vec2 operator*(const float &constant);
   /*
   Basic vector operations such as:
-    Sum and subtraction
-    Scalar vector multiplication
     Magnitude
     Normalization
     Distance between points
     Inclination
     Rotation
-    Finding the rect center
     etc
   See "Trabalho 2 section 1"
   */

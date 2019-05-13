@@ -56,8 +56,6 @@ void State::AddObject(int mouseX, int mouseY) {
   Face *face = new Face(*object);
 
   object->box.SetWidth(sprite->GetWidth());
-  printf("%d\n", sprite->GetWidth());
-  printf("%d\n", sprite->GetHeight());
   object->box.SetHeight(sprite->GetHeight());
   object->box.SetXPosition(mouseX - (sprite->GetWidth() / 2));
   object->box.SetYPosition(mouseY - (sprite->GetHeight() / 2));
@@ -108,7 +106,7 @@ void State::Input() {
 				this->quitRequested = true;
 			}
 			else {
-				Vec2 objectPosition = Vec2( mouseX, mouseY );
+				Vec2 objectPosition = Vec2( mouseX, mouseY ).Rotate( 200, -PI + PI * (rand() % 1001)/500.0 );
 				AddObject((int)objectPosition.GetXValue(), (int)objectPosition.GetYValue());
 			}
 		}

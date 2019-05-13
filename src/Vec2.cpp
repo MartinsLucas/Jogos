@@ -1,4 +1,5 @@
 #include "Vec2.h"
+#include <cmath>
 
 Vec2::Vec2() {
   this->x = 0;
@@ -17,8 +18,11 @@ int Vec2::GetYValue() {
   return (this->y);
 }
 
-Vec2 Vec2::GetRotated(float angle) {
-  return(Vec2(this->x, this->y));
+Vec2 Vec2::Rotate(float radius, float angle) {
+  int newXValue = this->x + (radius * cos(angle));
+  int newYValue = this->y + (radius * sin(angle));
+
+  return(Vec2(newXValue, newYValue));
 }
 
 Vec2 Vec2::operator+(const Vec2 &vec2) {
