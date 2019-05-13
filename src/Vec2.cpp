@@ -1,5 +1,4 @@
 #include "Vec2.h"
-#include <cmath>
 
 Vec2::Vec2() {
   this->x = 0;
@@ -23,6 +22,11 @@ Vec2 Vec2::Rotate(float radius, float angle) {
   int newYValue = this->y + (radius * sin(angle));
 
   return(Vec2(newXValue, newYValue));
+}
+
+Vec2 Vec2::RandomRotation(float radius) {
+  float randomAngle = -PI + PI * (rand() % 1001)/500.0;
+  return(this->Rotate(radius, randomAngle));
 }
 
 Vec2 Vec2::operator+(const Vec2 &vec2) {

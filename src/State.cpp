@@ -1,7 +1,5 @@
 #include "State.h"
 
-#define PI 3.1415926535
-
 State::State() : music("assets/audio/stageState.ogg"){
   this->quitRequested = false;
   this->music.Play(-1);
@@ -106,7 +104,7 @@ void State::Input() {
 				this->quitRequested = true;
 			}
 			else {
-				Vec2 objectPosition = Vec2( mouseX, mouseY ).Rotate( 200, -PI + PI * (rand() % 1001)/500.0 );
+				Vec2 objectPosition = Vec2( mouseX, mouseY ).RandomRotation( 200 );
 				AddObject((int)objectPosition.GetXValue(), (int)objectPosition.GetYValue());
 			}
 		}
