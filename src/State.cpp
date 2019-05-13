@@ -55,10 +55,12 @@ void State::AddObject(int mouseX, int mouseY) {
   Sound *sound = new Sound(*object, "assets/audio/boom.wav");
   Face *face = new Face(*object);
 
-  object->box.SetXPosition(mouseX);
-  object->box.SetYPosition(mouseY);
   object->box.SetWidth(sprite->GetWidth());
+  printf("%d\n", sprite->GetWidth());
+  printf("%d\n", sprite->GetHeight());
   object->box.SetHeight(sprite->GetHeight());
+  object->box.SetXPosition(mouseX - (sprite->GetWidth() / 2));
+  object->box.SetYPosition(mouseY - (sprite->GetHeight() / 2));
 
   object->AddComponent(sprite);
   object->AddComponent(sound);
@@ -71,7 +73,7 @@ bool State::QuitRequested() {
   return(this->quitRequested);
 }
 
-// Third-party code begin
+// Third-party based code
 void State::Input() {
 	SDL_Event event;
 	int mouseX, mouseY;
@@ -88,7 +90,7 @@ void State::Input() {
 		if(event.type == SDL_MOUSEBUTTONDOWN) {
 
 			// Iterates backwards to always click on the object above
-			for(int index = this->objectArray.size() - 1 ; index >= 0 ; --index) {
+			for( int index = this->objectArray.size() - 1 ; index >= 0 ; --index ) {
 				GameObject* gameObject = (GameObject*) this->objectArray[index].get();
 
 				if(gameObject->box.Contains((float)mouseX, (float)mouseY) ) {
@@ -106,10 +108,9 @@ void State::Input() {
 				this->quitRequested = true;
 			}
 			else {
-				// Vec2 objectPosition = Vec2( 200, 0 ).GetRotated( -PI + PI*(rand() % 1001)/500.0 ) + Vec2( mouseX, mouseY );
-				AddObject(/*(int)objectPosition.GetXPosition(), (int)objectPosition.GetYPosition()*/(float)mouseX, (float)mouseY);
+				Vec2 objectPosition = Vec2( mouseX, mouseY );
+				AddObject((int)objectPosition.GetXValue(), (int)objectPosition.GetYValue());
 			}
 		}
 	}
 }
-// Third-party code end

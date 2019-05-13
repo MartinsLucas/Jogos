@@ -1,6 +1,8 @@
 #ifndef VEC2_H
 #define VEC2_H
 
+#define PI 3.1415926535
+
 #include <iostream>
 #include <math.h>
 
@@ -15,8 +17,15 @@ public:
   Vec2();
   Vec2(int x, int y);
 
-  int GetXPosition();
-  int GetYPosition();
+  int GetXValue();
+  int GetYValue();
+  Vec2 GetRotated(float angle);
+
+  Vec2 operator+(const Vec2 &vec2);
+  Vec2 operator+(const float &constant);
+  Vec2 operator-(const Vec2 &vec2);
+  Vec2 operator-(const float &constant);
+  Vec2 operator*(const float &constant);
   /*
   Basic vector operations such as:
     Sum and subtraction

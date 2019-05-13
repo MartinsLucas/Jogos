@@ -21,6 +21,8 @@ public:
   int GetYPosition();
   void SetXPosition(int position);
   void SetYPosition(int position);
+  int GetHeight();
+  int GetWidth();
   void SetWidth(int width);
   void SetHeight(int height);
   bool Contains(float mouseX, float mouseY);

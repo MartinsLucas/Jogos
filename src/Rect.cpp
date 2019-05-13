@@ -24,7 +24,7 @@ bool Rect::WithinXLimits(float xPosition) {
 }
 
 bool Rect::WithinYLimits(float yPosition) {
-  return((this->y <= yPosition) and (yPosition <= (this->x + this->height)));
+  return((this->y <= yPosition) and (yPosition <= (this->y + this->height)));
 }
 
 int Rect::GetXPosition() {
@@ -41,6 +41,14 @@ void Rect::SetXPosition(int position) {
 
 void Rect::SetYPosition(int position) {
   this->y = position;
+}
+
+int Rect::GetWidth() {
+  return (this->width);
+}
+
+int Rect::GetHeight() {
+  return (this->height);
 }
 
 void Rect::SetWidth(int width) {

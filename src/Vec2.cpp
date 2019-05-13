@@ -10,9 +10,33 @@ Vec2::Vec2(int x, int y) {
   this->y = y;
 }
 
-int Vec2::GetXPosition() {
+int Vec2::GetXValue() {
   return (this->x);
 }
-int Vec2::GetYPosition() {
+int Vec2::GetYValue() {
   return (this->y);
+}
+
+Vec2 Vec2::GetRotated(float angle) {
+  return(Vec2(this->x, this->y));
+}
+
+Vec2 Vec2::operator+(const Vec2 &vec2) {
+  return (Vec2(this->x + vec2.x, this->y + vec2.y));
+}
+
+Vec2 Vec2::operator+(const float &constant) {
+  return (Vec2(this->x + constant, this->y + constant));
+}
+
+Vec2 Vec2::operator-(const Vec2 &vec2) {
+  return (Vec2(this->x - vec2.x, this->y - vec2.y));
+}
+
+Vec2 Vec2::operator-(const float &constant) {
+  return (Vec2(this->x - constant, this->y - constant));
+}
+
+Vec2 Vec2::operator*(const float &constant) {
+  return (Vec2(this->x * constant, this->y * constant));
 }
