@@ -17,9 +17,16 @@ Sprite::~Sprite() {
 }
 
 void Sprite::Render() {
-  SDL_Rect destineRect = SDL_Rect {
+  this->Render(
     this->associated.box.GetXPosition(),
-    this->associated.box.GetYPosition(),
+    this->associated.box.GetYPosition()
+  );
+}
+
+void Sprite::Render(int xPosition, int yPosition) {
+  SDL_Rect destineRect = SDL_Rect {
+    xPosition,
+    yPosition,
     this->clipRect.w,
     this->clipRect.h
   };
