@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "Component.h"
+#include "Resources.h"
 
 using namespace std;
 
@@ -20,8 +21,6 @@ private:
 public:
   Sprite(GameObject &associated);
   Sprite(GameObject &associated, const char *file);
-
-  ~Sprite();
 
   void Render();
   void Render(int xPosition, int yPosition);

@@ -10,12 +10,6 @@ Sprite::Sprite(GameObject& associated, const char *file) : Component(associated)
   this->Open(file);
 }
 
-Sprite::~Sprite() {
-  if (this->texture != nullptr) {
-    SDL_DestroyTexture(this->texture);
-  }
-}
-
 void Sprite::Render() {
   this->Render(
     this->associated.box.GetXPosition(),
@@ -47,11 +41,7 @@ void Sprite::Render(int xPosition, int yPosition) {
 void Sprite::Update(float delta) {}
 
 void Sprite::Open(const char *file) {
-  if (this->texture != nullptr) {
-    SDL_DestroyTexture(this->texture);
-  }
-
-  this->texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file);
+  this->texture = Resources::GetImage(file);
 
   if (this->texture != nullptr) {
     if (SDL_QueryTexture(this->texture, nullptr, nullptr, &(this->width), &(this->height)) != 0) {

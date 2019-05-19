@@ -6,6 +6,7 @@
 
 #include "Game.h"
 #include "State.h"
+#include "Resources.h"
 
 #include <cstdlib>
 #include <ctime>
@@ -95,4 +96,5 @@ void Game::Run() {
     SDL_RenderPresent(this->GetRenderer());
     SDL_Delay(33);
   }
+  Resources::ClearImages();
 }

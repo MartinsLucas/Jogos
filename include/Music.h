@@ -1,10 +1,12 @@
 #ifndef MUSIC_H
 #define MUSIC_H
 
-#include <iostream>
-
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
+
+#include <iostream>
+
+#include "Resources.h"
 
 using namespace std;
 

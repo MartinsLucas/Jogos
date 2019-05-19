@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "Component.h"
+#include "Resources.h"
 
 using namespace std;
 
