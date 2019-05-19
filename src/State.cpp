@@ -7,6 +7,19 @@ State::State() : music("assets/audio/stageState.ogg"){
   this->objectArray = std::vector<std::shared_ptr<GameObject>>();
 
   this->LoadAssets();
+
+  GameObject *tileSetObject = new GameObject();
+  TileSet *tileSet = new TileSet(*tileSetObject, 64, 64, "assets/img/tileset.png");
+
+  GameObject *tileMapObject = new GameObject();
+  TileMap *tileMap = new TileMap(*tileMapObject, "assets/map/tileMap.txt", tileSet);
+
+  tileMapObject->box.SetXPosition(0);
+  tileMapObject->box.SetYPosition(0);
+  tileMapObject->AddComponent(tileMap);
+
+  this->objectArray.emplace_back(tileSetObject);
+  this->objectArray.emplace_back(tileMapObject);
 }
 
 State::~State() {

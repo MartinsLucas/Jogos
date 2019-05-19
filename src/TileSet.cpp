@@ -1,6 +1,6 @@
 #include "TileSet.h"
 
-TileSet::TileSet(GameObject& spriteObject, int tileWidth, int tileHeight, const char *file) : tileSet(spriteObject, file) {
+TileSet::TileSet(GameObject &spriteObject, int tileWidth, int tileHeight, const char *file) : tileSet(spriteObject, file) {
     this->tileWidth = tileWidth;
     this->tileHeight = tileHeight;
 

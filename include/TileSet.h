@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Sprite.h"
+#include "GameObject.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ private:
   unsigned columns;
 
 public:
-  TileSet(GameObject& spriteObject, int tileWidth, int tileHeight, const char *file);
+  TileSet(GameObject &spriteObject, int tileWidth, int tileHeight, const char *file);
 
   void RenderTile(unsigned index, float xPosition, float yPosition);
   int GetTileWidth();
