@@ -17,7 +17,7 @@ private:
   unsigned columns;
 
 public:
-  TileSet(GameObject &spriteObject, int tileWidth, int tileHeight, const char *file);
+  TileSet(int tileWidth, int tileHeight, const char *file);
 
   void RenderTile(unsigned index, float xPosition, float yPosition);
   int GetTileWidth();

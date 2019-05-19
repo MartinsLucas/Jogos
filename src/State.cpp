@@ -8,8 +8,7 @@ State::State() : music("assets/audio/stageState.ogg"){
 
   this->LoadAssets();
 
-  GameObject *tileSetObject = new GameObject();
-  TileSet *tileSet = new TileSet(*tileSetObject, 64, 64, "assets/img/tileset.png");
+  TileSet *tileSet = new TileSet(64, 64, "assets/img/tileset.png");
 
   GameObject *tileMapObject = new GameObject();
   TileMap *tileMap = new TileMap(*tileMapObject, "assets/map/tileMap.txt", tileSet);
@@ -18,7 +17,6 @@ State::State() : music("assets/audio/stageState.ogg"){
   tileMapObject->box.SetYPosition(0);
   tileMapObject->AddComponent(tileMap);
 
-  this->objectArray.emplace_back(tileSetObject);
   this->objectArray.emplace_back(tileMapObject);
 }
 
