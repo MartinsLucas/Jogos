@@ -47,7 +47,21 @@ void State::LoadAssets() {
 }
 
 void State::Update(float delta) {
-  this->Input();
+  if(
+    InputManager::GetInstance().QuitRequested() ||
+    InputManager::GetInstance().KeyPress(ESCAPE_KEY)
+  ) {
+    this->quitRequested = true;
+  }
+
+  if(InputManager::GetInstance().KeyPress(SPACE_BAR)) {
+    Vec2 objectPosition = Vec2(
+      InputManager::GetInstance().GetMouseX(),
+      InputManager::GetInstance().GetMouseY()
+    ).RandomRotation( 200 );
+    AddObject((int)objectPosition.GetXValue(), (int)objectPosition.GetYValue());
+  }
+
   for(auto &object : this->objectArray) {
     object->Update(delta);
   }
@@ -78,46 +92,4 @@ void State::AddObject(int mouseX, int mouseY) {
 
 bool State::QuitRequested() {
   return(this->quitRequested);
-}
-
-// Third-party based code
-void State::Input() {
-	SDL_Event event;
-	int mouseX, mouseY;
-
-	SDL_GetMouseState(&mouseX, &mouseY);
-
-	// SDL_PollEvent returns 1 if events are found, otherwise zero
-	while (SDL_PollEvent(&event)) {
-
-		if(event.type == SDL_QUIT) {
-			this->quitRequested = true;
-		}
-
-		if(event.type == SDL_MOUSEBUTTONDOWN) {
-
-			// Iterates backwards to always click on the object above
-			for( int index = this->objectArray.size() - 1 ; index >= 0 ; --index ) {
-				GameObject* gameObject = (GameObject*) this->objectArray[index].get();
-
-				if(gameObject->box.Contains((float)mouseX, (float)mouseY) ) {
-					Face* face = (Face*)gameObject->GetComponent( "Face" );
-					if ( nullptr != face ) {
-						face->Damage(std::rand() % 10 + 10);
-						// Gets out of the loop (we only wants to hit one time)
-						break;
-					}
-				}
-			}
-		}
-		if( event.type == SDL_KEYDOWN ) {
-			if( event.key.keysym.sym == SDLK_ESCAPE ) {
-				this->quitRequested = true;
-			}
-			else {
-				Vec2 objectPosition = Vec2( mouseX, mouseY ).RandomRotation( 200 );
-				AddObject((int)objectPosition.GetXValue(), (int)objectPosition.GetYValue());
-			}
-		}
-	}
 }

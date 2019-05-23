@@ -19,13 +19,20 @@ void Face::Damage(int damage) {
     if ( nullptr != sound ) {
       sound->Play();
     }
-
   }
 }
 
 void Face::Render() {}
 
-void Face::Update(float delta) {}
+void Face::Update(float delta) {
+  if(this->associated.box.Contains(
+      InputManager::GetInstance().GetMouseX(),
+      InputManager::GetInstance().GetMouseY()
+  )) {
+    if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
+		  this->Damage(std::rand() % 10 + 10);
+	}
+}
 
 bool Face::Is(const char *type) {
   if (strcmp(type, "Face") == 0) {

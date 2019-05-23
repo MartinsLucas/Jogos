@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "State.h"
 #include "Resources.h"
+#include "InputManager.h"
 
 #include <cstdlib>
 #include <ctime>
@@ -91,6 +92,7 @@ Game& Game::GetInstance() {
 
 void Game::Run() {
   while (this->state->QuitRequested() != true) {
+    InputManager::GetInstance().Update();
     this->state->Update(-1);
     this->state->Render();
     SDL_RenderPresent(this->GetRenderer());

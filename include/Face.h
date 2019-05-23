@@ -3,8 +3,9 @@
 
 #include <iostream>
 
-#include "Component.h"
 #include "Sound.h"
+#include "Component.h"
+#include "InputManager.h"
 
 using namespace std;
 

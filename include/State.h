@@ -16,6 +16,7 @@
 #include "TileSet.h"
 #include "TileMap.h"
 #include "GameObject.h"
+#include "InputManager.h"
 
 using namespace std;
 
