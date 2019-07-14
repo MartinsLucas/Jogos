@@ -33,7 +33,7 @@ public:
   void Input();
   void Render();
   void LoadAssets();
-  void Update(float delta);
+  void Update(float dt);
   void AddObject(int mouseX, int mouseY);
   bool QuitRequested();
 };

@@ -18,7 +18,7 @@ public:
 
   void Damage(int damage);
   void Render();
-  void Update(float delta);
+  void Update(float dt);
   bool Is(const char *type);
 };
 #endif

@@ -46,7 +46,7 @@ void State::LoadAssets() {
   this->objectArray.emplace_back(tileMapObject);
 }
 
-void State::Update(float delta) {
+void State::Update(float dt) {
   if(
     InputManager::GetInstance().QuitRequested() ||
     InputManager::GetInstance().KeyPress(ESCAPE_KEY)
@@ -63,7 +63,7 @@ void State::Update(float delta) {
   }
 
   for(auto &object : this->objectArray) {
-    object->Update(delta);
+    object->Update(dt);
   }
   for(unsigned int index = 0 ; (index < this->objectArray.size()) ; index++) {
     if (this->objectArray[index].get()->IsDead()) {

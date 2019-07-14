@@ -24,7 +24,7 @@ void Face::Damage(int damage) {
 
 void Face::Render() {}
 
-void Face::Update(float delta) {
+void Face::Update(float dt) {
   if(this->associated.box.Contains(
       InputManager::GetInstance().GetMouseX(),
       InputManager::GetInstance().GetMouseY()

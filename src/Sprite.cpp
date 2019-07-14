@@ -38,7 +38,7 @@ void Sprite::Render(int xPosition, int yPosition) {
   }
 }
 
-void Sprite::Update(float delta) {}
+void Sprite::Update(float dt) {}
 
 void Sprite::Open(const char *file) {
   this->texture = Resources::GetImage(file);

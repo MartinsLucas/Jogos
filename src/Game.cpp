@@ -41,6 +41,8 @@ Game::Game(const char *title, int width, int height) {
             );
             if (this->renderer != nullptr) {
               this->state = new State();
+              this->dt = 0;
+              this->frameStart = 0;
             } else {
               printf("SDL_renderer couldn't be created!\n");
               printf("%s\n", SDL_GetError());
@@ -92,11 +94,22 @@ Game& Game::GetInstance() {
 
 void Game::Run() {
   while (this->state->QuitRequested() != true) {
+    this->CalculateDeltaTime();
     InputManager::GetInstance().Update();
-    this->state->Update(-1);
+    this->state->Update(this->dt);
     this->state->Render();
     SDL_RenderPresent(this->GetRenderer());
     SDL_Delay(33);
   }
   Resources::ClearImages();
+}
+
+void Game::CalculateDeltaTime() {
+  int sdlTicks = SDL_GetTicks();
+  this->dt = (sdlTicks - this->frameStart) / 1000.0;
+  this->frameStart = sdlTicks;
+}
+
+float Game::GetDeltaTime() {
+  return(this->dt);
 }

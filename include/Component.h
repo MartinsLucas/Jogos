@@ -16,7 +16,7 @@ public:
   Component(GameObject &associated);
 
   virtual ~Component();
-  virtual void Update(float delta) = 0;
+  virtual void Update(float dt) = 0;
   virtual void Render() = 0;
   virtual bool Is(const char *type) = 0;
 };

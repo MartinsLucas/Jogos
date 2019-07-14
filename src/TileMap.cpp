@@ -70,7 +70,7 @@ int& TileMap::At(int i, int j, int k) {
   return(this->tileMatrix[i + (j * this->mapWidth) + (k * (this->mapWidth * this->mapHeight))]);
 }
 
-void TileMap::Update(float delta) {}
+void TileMap::Update(float dt) {}
 
 bool TileMap::Is(const char *type) {
   if (strcmp(type, "TileMap") == 0) {

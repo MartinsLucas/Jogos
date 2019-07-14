@@ -22,7 +22,7 @@ public:
   TileMap(GameObject &associated, const char *file, TileSet *tileSet);
 
   void Render();
-  void Update(float delta = 0);
+  void Update(float dt = 0);
   void Load(const char *file);
   void SetTileSet(TileSet *tileSet);
   void RenderLayer(int layer, int cameraX = 0, int cameraY = 0);

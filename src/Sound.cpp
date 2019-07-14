@@ -27,7 +27,7 @@ void Sound::Stop(){
 
 void Sound::Render() {}
 
-void Sound::Update(float delta) {}
+void Sound::Update(float dt) {}
 
 void Sound::Play(int times){
   int newChannel = Mix_PlayChannel(this->channel, this->chunk, (times - 1));

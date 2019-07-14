@@ -19,10 +19,6 @@ void InputManager::Update() {
 
 	SDL_GetMouseState(&this->mouseX, &this->mouseY);
 
-  for (size_t i = 0; i < 6; i++) {
-    printf("Mouse State: %s\nMouse Update:%d\n", (mouseState[i] ? "True" : "False"), mouseUpdate[i]);
-  }
-
   SDL_Event event;
 	while(SDL_PollEvent(&event)) {
 

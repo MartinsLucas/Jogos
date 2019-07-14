@@ -22,7 +22,7 @@ public:
 
   ~GameObject();
 
-  void Update(float delta);
+  void Update(float dt);
   void Render();
   bool IsDead();
   void RequestDelete();
