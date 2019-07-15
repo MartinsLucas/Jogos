@@ -15,7 +15,7 @@ State::State() : music("assets/audio/stageState.ogg") {
 
 void State::LoadEnemies() {
   GameObject *alienGameObject = new GameObject();
-  alienGameObject->AddComponent(new Alien(*alienGameObject, 0));
+  alienGameObject->AddComponent(new Alien(*alienGameObject, 6));
 
   alienGameObject->box.SetCenter(Vec2(512.0, 300.0));
 
@@ -104,10 +104,9 @@ std::weak_ptr<GameObject> State::AddObject(GameObject *gameObject) {
 
 std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *gameObject) {
   std::weak_ptr<GameObject> weakGameObject = std::weak_ptr<GameObject>();
-  std::shared_ptr<GameObject> sharedGameObject = std::shared_ptr<GameObject>(gameObject);
-  for(auto &object : this->objectArray) {
-    if(&object == &sharedGameObject) {
-      weakGameObject = std::weak_ptr<GameObject>(sharedGameObject);
+  for (unsigned i = 0; i < this->objectArray.size(); i++) {
+    if (this->objectArray[i].get() == gameObject) {
+      weakGameObject = std::weak_ptr<GameObject>(this->objectArray[i]);
     }
   }
   return(weakGameObject);

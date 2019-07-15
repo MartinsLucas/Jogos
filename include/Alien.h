@@ -24,6 +24,7 @@ private:
 
   int hp;
   Vec2 speed;
+  int minionsAmount;
 
   std::queue<Action> taskQueue;
   std::vector<std::weak_ptr<GameObject>> minionArray;

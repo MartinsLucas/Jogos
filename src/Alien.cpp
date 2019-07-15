@@ -1,12 +1,17 @@
 #define HP 30
 #define SPEED 250
 #define TOLERANCE 1e-5
+#define PI 3.1415926535
 
-
+#include "Game.h"
 #include "Alien.h"
+#include "State.h"
 #include "Camera.h"
+#include "Minion.h"
 #include "Sprite.h"
 #include "InputManager.h"
+
+#include <memory>
 
 Alien::Alien(GameObject &associated, int minionsAmount) : Component(associated) {
   Sprite *sprite = new Sprite(associated, "assets/img/alien.png");
@@ -17,7 +22,7 @@ Alien::Alien(GameObject &associated, int minionsAmount) : Component(associated) 
   associated.box.width = sprite->GetWidth();
   associated.box.height = sprite->GetHeight();
 
-
+  this->minionsAmount = minionsAmount;
   this->hp = HP;
   this->speed = Vec2();
 }
@@ -30,7 +35,19 @@ Alien::~Alien() {
   this->minionArray.clear();
 }
 
-void Alien::Start() {}
+void Alien::Start() {
+  for (int i = 0; i < this->minionsAmount; i++) {
+    GameObject *minionGameObject = new GameObject();
+    std::weak_ptr<GameObject> alienCenter = Game::GetInstance().GetState().GetObjectPtr(&this->associated);
+
+    minionGameObject->AddComponent(new Minion(
+      *minionGameObject,
+      alienCenter,
+      (2 * PI / this->minionsAmount) * i
+    ));
+    this->minionArray.push_back(Game::GetInstance().GetState().AddObject(minionGameObject));
+  }
+}
 
 void Alien::Render() {}
 
@@ -79,6 +96,7 @@ void Alien::Update(float dt) {
     this->associated.RequestDelete();
   }
 }
+
 Vec2 Alien::MoveTo(Vec2 target, float dt) {
   Vec2 alienPosition = this->associated.box.GetCenter();
   this->speed = alienPosition.GetDisplacementSpeed(target, SPEED);
@@ -102,6 +120,7 @@ Vec2 Alien::MoveTo(Vec2 target, float dt) {
 
   return(alienPosition);
 }
+
 bool Alien::Is(const char *type) {
   if (strcmp(type, "Alien") == 0) {
     return(true);
