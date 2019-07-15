@@ -1,6 +1,7 @@
 #include "TileMap.h"
+#include "Camera.h"
 
-TileMap::TileMap(GameObject &associated, const char *file, TileSet *tileSet) : Component(associated){
+TileMap::TileMap(GameObject &associated, const char *file, TileSet *tileSet) : Component(associated) {
   this->Load(file);
   this->SetTileSet(tileSet);
 }
@@ -36,14 +37,13 @@ void TileMap::SetTileSet(TileSet* tileSet) {
   this->tileSet = tileSet;
 }
 
-void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
-  // Camera logic here
+void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
   for (int j = 0 ; j < this->mapHeight ; j++) {
     for (int i = 0 ; i < this->mapWidth ; i++) {
       this->tileSet->RenderTile(
         this->At(i, j, layer),
-        (this->tileSet->GetTileWidth() * i),
-        (this->tileSet->GetTileHeight() * j)
+        (this->tileSet->GetTileWidth() * i) - cameraX,
+        (this->tileSet->GetTileHeight() * j) - cameraY
       );
     }
   }
@@ -51,7 +51,7 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY){
 
 void TileMap::Render() {
   for (int index = 0; index < this->mapDepth; index++) {
-    RenderLayer(index);
+    RenderLayer(index, Camera::position.x, Camera::position.y);
   }
 }
 

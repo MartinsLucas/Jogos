@@ -1,6 +1,7 @@
 #include "State.h"
+#include "Camera.h"
 
-State::State() : music("assets/audio/stageState.ogg"){
+State::State() : music("assets/audio/stageState.ogg") {
   this->quitRequested = false;
   this->music.Play(-1);
 
@@ -26,10 +27,10 @@ void State::LoadAssets() {
   GameObject *spriteObject = new GameObject();
   Sprite *background = new Sprite(*spriteObject, "assets/img/ocean.jpg");
 
-  spriteObject->box.SetXPosition(0);
-  spriteObject->box.SetYPosition(0);
-  spriteObject->box.SetWidth(background->GetWidth());
-  spriteObject->box.SetHeight(background->GetHeight());
+  spriteObject->box.x = 0;
+  spriteObject->box.y = 0;
+  spriteObject->box.width = background->GetWidth();
+  spriteObject->box.height = background->GetHeight();
 
   spriteObject->AddComponent(background);
   this->objectArray.emplace_back(spriteObject);
@@ -39,8 +40,8 @@ void State::LoadAssets() {
 
   TileMap *tileMap = new TileMap(*tileMapObject, "assets/map/tileMap.txt", tileSet);
 
-  tileMapObject->box.SetXPosition(0);
-  tileMapObject->box.SetYPosition(0);
+  tileMapObject->box.x = 0;
+  tileMapObject->box.y = 0;
 
   tileMapObject->AddComponent(tileMap);
   this->objectArray.emplace_back(tileMapObject);
@@ -54,12 +55,14 @@ void State::Update(float dt) {
     this->quitRequested = true;
   }
 
+  Camera::Update(dt);
+
   if(InputManager::GetInstance().KeyPress(SPACE_BAR)) {
     Vec2 objectPosition = Vec2(
-      InputManager::GetInstance().GetMouseX(),
-      InputManager::GetInstance().GetMouseY()
+      InputManager::GetInstance().GetMouseX() + Camera::position.x,
+      InputManager::GetInstance().GetMouseY() + Camera::position.y
     ).RandomRotation( 200 );
-    AddObject((int)objectPosition.GetXValue(), (int)objectPosition.GetYValue());
+    AddObject((int)objectPosition.x, (int)objectPosition.y);
   }
 
   for(auto &object : this->objectArray) {
@@ -78,10 +81,10 @@ void State::AddObject(int mouseX, int mouseY) {
   Sound *sound = new Sound(*object, "assets/audio/boom.wav");
   Face *face = new Face(*object);
 
-  object->box.SetWidth(sprite->GetWidth());
-  object->box.SetHeight(sprite->GetHeight());
-  object->box.SetXPosition(mouseX - (sprite->GetWidth() / 2));
-  object->box.SetYPosition(mouseY - (sprite->GetHeight() / 2));
+  object->box.width = sprite->GetWidth();
+  object->box.height = sprite->GetHeight();
+  object->box.x = mouseX - (sprite->GetWidth() / 2);
+  object->box.y = mouseY - (sprite->GetHeight() / 2);
 
   object->AddComponent(sprite);
   object->AddComponent(sound);

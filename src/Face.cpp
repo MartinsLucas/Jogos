@@ -1,4 +1,6 @@
 #include "Face.h"
+#include "Camera.h"
+
 #include <typeinfo>
 
 Face::Face(GameObject &associated) : Component(associated) {
@@ -26,8 +28,8 @@ void Face::Render() {}
 
 void Face::Update(float dt) {
   if(this->associated.box.Contains(
-      InputManager::GetInstance().GetMouseX(),
-      InputManager::GetInstance().GetMouseY()
+      InputManager::GetInstance().GetMouseX() + Camera::position.x,
+      InputManager::GetInstance().GetMouseY() + Camera::position.y
   )) {
     if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON))
 		  this->Damage(std::rand() % 10 + 10);

@@ -5,7 +5,7 @@ Sound::Sound(GameObject &associated) : Component(associated) {
   this->chunk = nullptr;
 }
 
-Sound::Sound(GameObject &associated, const char* file) : Sound(associated){
+Sound::Sound(GameObject &associated, const char* file) : Sound(associated) {
   this->Open(file);
 }
 
@@ -29,7 +29,7 @@ void Sound::Render() {}
 
 void Sound::Update(float dt) {}
 
-void Sound::Play(int times){
+void Sound::Play(int times) {
   int newChannel = Mix_PlayChannel(this->channel, this->chunk, (times - 1));
   if(newChannel >= 0) {
     this->channel = newChannel;

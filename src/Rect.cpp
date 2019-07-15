@@ -27,34 +27,11 @@ bool Rect::WithinYLimits(float yPosition) {
   return((this->y <= yPosition) and (yPosition <= (this->y + this->height)));
 }
 
-int Rect::GetXPosition() {
-  return(this->x);
+Vec2 Rect::GetCenter() {
+  return(Vec2(this->x + (this->width / 2), this->y + (this->height / 2)));
 }
 
-int Rect::GetYPosition() {
-  return(this->y);
-}
-
-void Rect::SetXPosition(int position) {
-  this->x = position;
-}
-
-void Rect::SetYPosition(int position) {
-  this->y = position;
-}
-
-int Rect::GetWidth() {
-  return (this->width);
-}
-
-int Rect::GetHeight() {
-  return (this->height);
-}
-
-void Rect::SetWidth(int width) {
-  this->width = width;
-}
-
-void Rect::SetHeight(int height) {
-  this->height = height;
+void Rect::SetCenter(Vec2 center) {
+  this->x = center.x - (this->width / 2);
+  this->y = center.y - (this->height / 2);
 }

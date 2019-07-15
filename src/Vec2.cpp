@@ -10,13 +10,6 @@ Vec2::Vec2(int x, int y) {
   this->y = y;
 }
 
-int Vec2::GetXValue() {
-  return (this->x);
-}
-int Vec2::GetYValue() {
-  return (this->y);
-}
-
 Vec2 Vec2::Rotate(float radius, float angle) {
   int newXValue = this->x + (radius * cos(angle));
   int newYValue = this->y + (radius * sin(angle));

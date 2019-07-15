@@ -2,6 +2,9 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 600
+
 #include "SDL_include.h"
 
 #include "Game.h"
@@ -13,12 +16,14 @@
 #include <ctime>
 
 Game *Game::instance = nullptr;
+int Game::screenWidth = SCREEN_WIDTH;
+int Game::screenHeight = SCREEN_HEIGHT;
 
 Game::Game(const char *title, int width, int height) {
   srand( (unsigned) time(NULL) );
 
-  if (instance == nullptr) {
-    instance = this;
+  if (Game::instance == nullptr) {
+    Game::instance = this;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) == 0) {
       if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF) != 0) {
         Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3);
@@ -86,8 +91,8 @@ State& Game::GetState() {
 }
 
 Game& Game::GetInstance() {
-  if (instance == nullptr) {
-    instance = new Game("Lucas de Araujo Martins - 150015771", 1024, 600);
+  if (Game::instance == nullptr) {
+    Game::instance = new Game("Lucas de Araujo Martins - 150015771", Game::screenWidth, Game::screenHeight);
   }
   return(*instance);
 }
@@ -112,4 +117,11 @@ void Game::CalculateDeltaTime() {
 
 float Game::GetDeltaTime() {
   return(this->dt);
+}
+
+int Game::GetScreenWidth() {
+  return(Game::screenWidth);
+}
+int Game::GetScreenHeight() {
+  return(Game::screenHeight);
 }

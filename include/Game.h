@@ -18,14 +18,18 @@ private:
   int frameStart;
   State *state;
   SDL_Window *window;
-  static Game *instance;
   SDL_Renderer *renderer;
+
+  static Game *instance;
 
   Game(const char *title, int width, int height);
 
   void CalculateDeltaTime();
 
 public:
+  static int screenWidth;
+  static int screenHeight;
+
   ~Game();
 
   void Run();
@@ -34,5 +38,8 @@ public:
   static Game &GetInstance();
 
   float GetDeltaTime();
+
+  static int GetScreenWidth();
+  static int GetScreenHeight();
 };
 #endif
