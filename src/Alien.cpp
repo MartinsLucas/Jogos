@@ -57,31 +57,12 @@ void Alien::Update(float dt) {
     Action task = taskQueue.front();
     switch (task.type) {
       case Action::ActionType::MOVE: {
-        Vec2 alienPosition = this->associated.box.GetCenter();
-        this->speed = alienPosition.GetDisplacementSpeed(task.position, SPEED);
+        Vec2 newPosition = this->MoveTo(task.position, dt);
+        this->associated.box.SetCenter(newPosition);
 
         if(
-          (alienPosition.x + this->speed.x * dt > task.position.x && task.position.x > alienPosition.x)
-          || (alienPosition.x + this->speed.x * dt < task.position.x && task.position.x < alienPosition.x)
-        ) {
-          alienPosition.x = task.position.x;
-        } else {
-          alienPosition.x += this->speed.x * dt;
-        }
-        if(
-          (alienPosition.y + this->speed.y * dt > task.position.y && task.position.y > alienPosition.y)
-          || (alienPosition.y + this->speed.y * dt < task.position.y && task.position.y < alienPosition.y)
-        ) {
-          alienPosition.y = task.position.y;
-        } else {
-          alienPosition.y += this->speed.y * dt;
-        }
-
-        this->associated.box.SetCenter(alienPosition);
-
-        if(
-          abs(task.position.x - alienPosition.x) < TOLERANCE
-          && abs(task.position.y - alienPosition.y) < TOLERANCE
+          abs(task.position.x - newPosition.x) < TOLERANCE
+          && abs(task.position.y - newPosition.y) < TOLERANCE
         ) {
           taskQueue.pop();
         }
@@ -98,7 +79,29 @@ void Alien::Update(float dt) {
     this->associated.RequestDelete();
   }
 }
+Vec2 Alien::MoveTo(Vec2 target, float dt) {
+  Vec2 alienPosition = this->associated.box.GetCenter();
+  this->speed = alienPosition.GetDisplacementSpeed(target, SPEED);
 
+  if(
+    (alienPosition.x + this->speed.x * dt > target.x && target.x > alienPosition.x)
+    || (alienPosition.x + this->speed.x * dt < target.x && target.x < alienPosition.x)
+  ) {
+    alienPosition.x = target.x;
+  } else {
+    alienPosition.x += this->speed.x * dt;
+  }
+  if(
+    (alienPosition.y + this->speed.y * dt > target.y && target.y > alienPosition.y)
+    || (alienPosition.y + this->speed.y * dt < target.y && target.y < alienPosition.y)
+  ) {
+    alienPosition.y = target.y;
+  } else {
+    alienPosition.y += this->speed.y * dt;
+  }
+
+  return(alienPosition);
+}
 bool Alien::Is(const char *type) {
   if (strcmp(type, "Alien") == 0) {
     return(true);
