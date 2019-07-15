@@ -76,6 +76,8 @@ int& TileMap::At(int i, int j, int k) {
 
 void TileMap::Update(float dt) {}
 
+void TileMap::Start() {}
+
 bool TileMap::Is(const char *type) {
   if (strcmp(type, "TileMap") == 0) {
     return(true);

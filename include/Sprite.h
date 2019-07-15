@@ -22,6 +22,7 @@ public:
   Sprite(GameObject &associated);
   Sprite(GameObject &associated, const char *file);
 
+  void Start();
   void Render();
   void Render(int xPosition, int yPosition);
   void Update(float dt);

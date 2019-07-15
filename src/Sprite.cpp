@@ -79,6 +79,8 @@ bool Sprite::IsOpen() {
   }
 }
 
+void Sprite::Start() {}
+
 bool Sprite::Is(const char *type) {
   if (strcmp(type, "Sprite") == 0) {
     return(true);

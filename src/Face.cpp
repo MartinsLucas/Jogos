@@ -36,6 +36,8 @@ void Face::Update(float dt) {
 	}
 }
 
+void Face::Start() {}
+
 bool Face::Is(const char *type) {
   if (strcmp(type, "Face") == 0) {
     return(true);

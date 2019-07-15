@@ -2,13 +2,22 @@
 #include "Camera.h"
 #include "CameraFollower.h"
 
+#include <memory>
+
 State::State() : music("assets/audio/stageState.ogg") {
   this->quitRequested = false;
+  this->started = false;
   this->music.Play(-1);
 
   this->objectArray = std::vector<std::shared_ptr<GameObject>>();
+}
 
+void State::Start() {
   this->LoadAssets();
+  for(auto &object : this->objectArray) {
+    object->Start();
+  }
+  this->started = true;
 }
 
 State::~State() {
@@ -94,6 +103,26 @@ void State::AddObject(int mouseX, int mouseY) {
   object->AddComponent(face);
 
   this->objectArray.emplace_back(object);
+}
+
+std::weak_ptr<GameObject> State::AddObject(GameObject *gameObject) {
+  std::shared_ptr<GameObject> sharedGameObject = std::shared_ptr<GameObject>(gameObject);
+  this->objectArray.push_back(sharedGameObject);
+  if (this->started) {
+    sharedGameObject->Start();
+  }
+  return(std::weak_ptr<GameObject>(sharedGameObject));
+}
+
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *gameObject) {
+  std::weak_ptr<GameObject> weakGameObject = std::weak_ptr<GameObject>();
+  std::shared_ptr<GameObject> sharedGameObject = std::shared_ptr<GameObject>(gameObject);
+  for(auto &object : this->objectArray) {
+    if(&object == &sharedGameObject) {
+      weakGameObject = std::weak_ptr<GameObject>(sharedGameObject);
+    }
+  }
+  return(weakGameObject);
 }
 
 bool State::QuitRequested() {

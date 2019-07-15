@@ -21,6 +21,7 @@ private:
 public:
   TileMap(GameObject &associated, const char *file, TileSet *tileSet);
 
+  void Start();
   void Render();
   void Update(float dt = 0);
   void Load(const char *file);

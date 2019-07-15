@@ -10,6 +10,7 @@ void CameraFollower::Update(float dt) {
   this->associated.box.y = Camera::position.y;
 }
 
+void CameraFollower::Start() {}
 
 bool CameraFollower::Is(const char *type) {
   if (strcmp(type, "CameraFollower") == 0) {

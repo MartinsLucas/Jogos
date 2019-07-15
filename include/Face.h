@@ -16,9 +16,10 @@ private:
 public:
   Face(GameObject &associated);
 
-  void Damage(int damage);
+  void Start();
   void Render();
   void Update(float dt);
+  void Damage(int damage);
   bool Is(const char *type);
 };
 #endif
