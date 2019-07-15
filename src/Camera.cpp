@@ -2,14 +2,14 @@
 
 #include "Game.h"
 
-Vec2 Camera::speed = Vec2(250, 250);
+Vec2 Camera::speed = Vec2(250.0, 250.0);
 GameObject *Camera::focus = nullptr;
 Vec2 Camera::position = Vec2();
 
 void Camera::Update(float dt) {
   if (focus != nullptr) {
-    position.x = focus->box.GetCenter().x - (Game::screenWidth / 2);
-    position.y = focus->box.GetCenter().y - (Game::screenHeight / 2);
+    position.x = focus->box.GetCenter().x - (Game::screenWidth / 2.0);
+    position.y = focus->box.GetCenter().y - (Game::screenHeight / 2.0);
   } else {
     if(InputManager::GetInstance().IsKeyDown(UP_ARROW_KEY)) {
       position.y -= speed.y * dt;

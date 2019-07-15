@@ -10,7 +10,6 @@
 
 #include "Vec2.h"
 #include "Sprite.h"
-#include "Face.h"
 #include "Music.h"
 #include "Sound.h"
 #include "TileSet.h"
@@ -35,11 +34,11 @@ public:
   void Input();
   void Render();
   void LoadAssets();
+  void LoadEnemies();
   void Update(float dt);
 
   bool QuitRequested();
 
-  void AddObject(int mouseX, int mouseY);
   std::weak_ptr<GameObject> AddObject(GameObject *gameObject);
   std::weak_ptr<GameObject> GetObjectPtr(GameObject *gameObject);
 };
