@@ -12,11 +12,6 @@ Sound::Sound(GameObject &associated, const char* file) : Sound(associated){
 Sound::~Sound() {
   if(!Mix_Playing(this->channel)) {
     this->Stop();
-    if(this->chunk != nullptr) {
-      Mix_FreeChunk(this->chunk);
-    } else {
-      printf("Can not free an unnexistant sound chunk!\n");
-    }
   }
 }
 
@@ -45,7 +40,7 @@ void Sound::Play(int times){
 }
 
 void Sound::Open(const char *file) {
-  this->chunk = Mix_LoadWAV(file);
+  this->chunk = Resources::GetSound(file);
 
   if(this->chunk == nullptr) {
     printf("Sound could not be loaded!\n");

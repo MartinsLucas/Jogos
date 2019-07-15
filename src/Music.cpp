@@ -10,7 +10,6 @@ Music::Music(const char *file) {
 
 Music::~Music() {
   this->Stop();
-  Mix_FreeMusic(this->music);
 }
 
 void Music::Play(int times) {
@@ -24,7 +23,7 @@ void Music::Stop(int msToStop) {
 }
 
 void Music::Open(const char *file) {
-  this->music = Mix_LoadMUS(file);
+  this->music = Resources::GetMusic(file);
 
   if (this->music == nullptr) {
     printf("Couldn't load music!\n");

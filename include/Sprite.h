@@ -7,6 +7,7 @@
 #include <iostream>
 
 #include "Component.h"
+#include "Resources.h"
 
 using namespace std;
 
@@ -21,9 +22,8 @@ public:
   Sprite(GameObject &associated);
   Sprite(GameObject &associated, const char *file);
 
-  ~Sprite();
-
   void Render();
+  void Render(int xPosition, int yPosition);
   void Update(float delta);
   void Open(const char *file);
   void SetClip(int x, int y, int width, int height);

@@ -13,6 +13,8 @@
 #include "Face.h"
 #include "Music.h"
 #include "Sound.h"
+#include "TileSet.h"
+#include "TileMap.h"
 #include "GameObject.h"
 
 using namespace std;
