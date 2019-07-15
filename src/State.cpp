@@ -1,5 +1,6 @@
 #include "State.h"
 #include "Camera.h"
+#include "CameraFollower.h"
 
 State::State() : music("assets/audio/stageState.ogg") {
   this->quitRequested = false;
@@ -25,13 +26,15 @@ void State::Render() {
 
 void State::LoadAssets() {
   GameObject *spriteObject = new GameObject();
-  Sprite *background = new Sprite(*spriteObject, "assets/img/ocean.jpg");
+  Sprite *backgroundSprite = new Sprite(*spriteObject, "assets/img/ocean.jpg");
+  CameraFollower *background = new CameraFollower(*spriteObject);
 
   spriteObject->box.x = 0;
   spriteObject->box.y = 0;
-  spriteObject->box.width = background->GetWidth();
-  spriteObject->box.height = background->GetHeight();
+  spriteObject->box.width = backgroundSprite->GetWidth();
+  spriteObject->box.height = backgroundSprite->GetHeight();
 
+  spriteObject->AddComponent(backgroundSprite);
   spriteObject->AddComponent(background);
   this->objectArray.emplace_back(spriteObject);
 
