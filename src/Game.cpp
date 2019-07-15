@@ -2,22 +2,28 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 
+#define SCREEN_WIDTH 1024
+#define SCREEN_HEIGHT 600
+
 #include "SDL_include.h"
 
 #include "Game.h"
 #include "State.h"
 #include "Resources.h"
+#include "InputManager.h"
 
 #include <cstdlib>
 #include <ctime>
 
 Game *Game::instance = nullptr;
+int Game::screenWidth = SCREEN_WIDTH;
+int Game::screenHeight = SCREEN_HEIGHT;
 
 Game::Game(const char *title, int width, int height) {
   srand( (unsigned) time(NULL) );
 
-  if (instance == nullptr) {
-    instance = this;
+  if (Game::instance == nullptr) {
+    Game::instance = this;
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER) == 0) {
       if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF) != 0) {
         Mix_Init(MIX_INIT_OGG | MIX_INIT_MP3);
@@ -40,6 +46,8 @@ Game::Game(const char *title, int width, int height) {
             );
             if (this->renderer != nullptr) {
               this->state = new State();
+              this->dt = 0;
+              this->frameStart = 0;
             } else {
               printf("SDL_renderer couldn't be created!\n");
               printf("%s\n", SDL_GetError());
@@ -83,18 +91,37 @@ State& Game::GetState() {
 }
 
 Game& Game::GetInstance() {
-  if (instance == nullptr) {
-    instance = new Game("Lucas de Araujo Martins - 150015771", 1024, 600);
+  if (Game::instance == nullptr) {
+    Game::instance = new Game("Lucas de Araujo Martins - 150015771", Game::screenWidth, Game::screenHeight);
   }
   return(*instance);
 }
 
 void Game::Run() {
   while (this->state->QuitRequested() != true) {
-    this->state->Update(-1);
+    this->CalculateDeltaTime();
+    InputManager::GetInstance().Update();
+    this->state->Update(this->dt);
     this->state->Render();
     SDL_RenderPresent(this->GetRenderer());
     SDL_Delay(33);
   }
   Resources::ClearImages();
+}
+
+void Game::CalculateDeltaTime() {
+  int sdlTicks = SDL_GetTicks();
+  this->dt = (sdlTicks - this->frameStart) / 1000.0;
+  this->frameStart = sdlTicks;
+}
+
+float Game::GetDeltaTime() {
+  return(this->dt);
+}
+
+int Game::GetScreenWidth() {
+  return(Game::screenWidth);
+}
+int Game::GetScreenHeight() {
+  return(Game::screenHeight);
 }

@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Sprite.h"
+#include "Camera.h"
 
 Sprite::Sprite(GameObject& associated) : Component(associated) {
   this->texture = nullptr;
@@ -12,8 +13,8 @@ Sprite::Sprite(GameObject& associated, const char *file) : Component(associated)
 
 void Sprite::Render() {
   this->Render(
-    this->associated.box.GetXPosition(),
-    this->associated.box.GetYPosition()
+    this->associated.box.x - Camera::position.x,
+    this->associated.box.y - Camera::position.y
   );
 }
 
@@ -38,7 +39,7 @@ void Sprite::Render(int xPosition, int yPosition) {
   }
 }
 
-void Sprite::Update(float delta) {}
+void Sprite::Update(float dt) {}
 
 void Sprite::Open(const char *file) {
   this->texture = Resources::GetImage(file);

@@ -3,8 +3,9 @@
 
 #include <iostream>
 
-#include "Component.h"
 #include "Sound.h"
+#include "Component.h"
+#include "InputManager.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ public:
 
   void Damage(int damage);
   void Render();
-  void Update(float delta);
+  void Update(float dt);
   bool Is(const char *type);
 };
 #endif

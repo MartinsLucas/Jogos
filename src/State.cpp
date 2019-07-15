@@ -1,6 +1,8 @@
 #include "State.h"
+#include "Camera.h"
+#include "CameraFollower.h"
 
-State::State() : music("assets/audio/stageState.ogg"){
+State::State() : music("assets/audio/stageState.ogg") {
   this->quitRequested = false;
   this->music.Play(-1);
 
@@ -24,13 +26,15 @@ void State::Render() {
 
 void State::LoadAssets() {
   GameObject *spriteObject = new GameObject();
-  Sprite *background = new Sprite(*spriteObject, "assets/img/ocean.jpg");
+  Sprite *backgroundSprite = new Sprite(*spriteObject, "assets/img/ocean.jpg");
+  CameraFollower *background = new CameraFollower(*spriteObject);
 
-  spriteObject->box.SetXPosition(0);
-  spriteObject->box.SetYPosition(0);
-  spriteObject->box.SetWidth(background->GetWidth());
-  spriteObject->box.SetHeight(background->GetHeight());
+  spriteObject->box.x = 0;
+  spriteObject->box.y = 0;
+  spriteObject->box.width = backgroundSprite->GetWidth();
+  spriteObject->box.height = backgroundSprite->GetHeight();
 
+  spriteObject->AddComponent(backgroundSprite);
   spriteObject->AddComponent(background);
   this->objectArray.emplace_back(spriteObject);
 
@@ -39,17 +43,33 @@ void State::LoadAssets() {
 
   TileMap *tileMap = new TileMap(*tileMapObject, "assets/map/tileMap.txt", tileSet);
 
-  tileMapObject->box.SetXPosition(0);
-  tileMapObject->box.SetYPosition(0);
+  tileMapObject->box.x = 0;
+  tileMapObject->box.y = 0;
 
   tileMapObject->AddComponent(tileMap);
   this->objectArray.emplace_back(tileMapObject);
 }
 
-void State::Update(float delta) {
-  this->Input();
+void State::Update(float dt) {
+  if(
+    InputManager::GetInstance().QuitRequested() ||
+    InputManager::GetInstance().KeyPress(ESCAPE_KEY)
+  ) {
+    this->quitRequested = true;
+  }
+
+  Camera::Update(dt);
+
+  if(InputManager::GetInstance().KeyPress(SPACE_BAR)) {
+    Vec2 objectPosition = Vec2(
+      InputManager::GetInstance().GetMouseX() + Camera::position.x,
+      InputManager::GetInstance().GetMouseY() + Camera::position.y
+    ).RandomRotation( 200 );
+    AddObject((int)objectPosition.x, (int)objectPosition.y);
+  }
+
   for(auto &object : this->objectArray) {
-    object->Update(delta);
+    object->Update(dt);
   }
   for(unsigned int index = 0 ; (index < this->objectArray.size()) ; index++) {
     if (this->objectArray[index].get()->IsDead()) {
@@ -64,10 +84,10 @@ void State::AddObject(int mouseX, int mouseY) {
   Sound *sound = new Sound(*object, "assets/audio/boom.wav");
   Face *face = new Face(*object);
 
-  object->box.SetWidth(sprite->GetWidth());
-  object->box.SetHeight(sprite->GetHeight());
-  object->box.SetXPosition(mouseX - (sprite->GetWidth() / 2));
-  object->box.SetYPosition(mouseY - (sprite->GetHeight() / 2));
+  object->box.width = sprite->GetWidth();
+  object->box.height = sprite->GetHeight();
+  object->box.x = mouseX - (sprite->GetWidth() / 2);
+  object->box.y = mouseY - (sprite->GetHeight() / 2);
 
   object->AddComponent(sprite);
   object->AddComponent(sound);
@@ -78,46 +98,4 @@ void State::AddObject(int mouseX, int mouseY) {
 
 bool State::QuitRequested() {
   return(this->quitRequested);
-}
-
-// Third-party based code
-void State::Input() {
-	SDL_Event event;
-	int mouseX, mouseY;
-
-	SDL_GetMouseState(&mouseX, &mouseY);
-
-	// SDL_PollEvent returns 1 if events are found, otherwise zero
-	while (SDL_PollEvent(&event)) {
-
-		if(event.type == SDL_QUIT) {
-			this->quitRequested = true;
-		}
-
-		if(event.type == SDL_MOUSEBUTTONDOWN) {
-
-			// Iterates backwards to always click on the object above
-			for( int index = this->objectArray.size() - 1 ; index >= 0 ; --index ) {
-				GameObject* gameObject = (GameObject*) this->objectArray[index].get();
-
-				if(gameObject->box.Contains((float)mouseX, (float)mouseY) ) {
-					Face* face = (Face*)gameObject->GetComponent( "Face" );
-					if ( nullptr != face ) {
-						face->Damage(std::rand() % 10 + 10);
-						// Gets out of the loop (we only wants to hit one time)
-						break;
-					}
-				}
-			}
-		}
-		if( event.type == SDL_KEYDOWN ) {
-			if( event.key.keysym.sym == SDLK_ESCAPE ) {
-				this->quitRequested = true;
-			}
-			else {
-				Vec2 objectPosition = Vec2( mouseX, mouseY ).RandomRotation( 200 );
-				AddObject((int)objectPosition.GetXValue(), (int)objectPosition.GetYValue());
-			}
-		}
-	}
 }

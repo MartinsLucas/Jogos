@@ -19,9 +19,9 @@ GameObject::~GameObject() {
   this->components.clear();
 }
 
-void GameObject::Update(float delta) {
+void GameObject::Update(float dt) {
   for(auto &component : this->components) {
-    component->Update(delta);
+    component->Update(dt);
   }
 }
 
@@ -31,7 +31,7 @@ void GameObject::Render() {
   }
 }
 
-bool GameObject::IsDead(){
+bool GameObject::IsDead() {
     return(this->isDead);
 }
 

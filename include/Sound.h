@@ -23,7 +23,7 @@ public:
 
   void Stop();
   void Render();
-  void Update(float delta);
+  void Update(float dt);
   void Play(int times = 1);
   void Open(const char *file);
   bool IsOpen();

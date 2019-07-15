@@ -16,6 +16,7 @@
 #include "TileSet.h"
 #include "TileMap.h"
 #include "GameObject.h"
+#include "InputManager.h"
 
 using namespace std;
 
@@ -32,7 +33,7 @@ public:
   void Input();
   void Render();
   void LoadAssets();
-  void Update(float delta);
+  void Update(float dt);
   void AddObject(int mouseX, int mouseY);
   bool QuitRequested();
 };

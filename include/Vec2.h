@@ -11,16 +11,13 @@
 using namespace std;
 
 class Vec2 {
-private:
+public:
   int x;
   int y;
 
-public:
   Vec2();
   Vec2(int x, int y);
 
-  int GetXValue();
-  int GetYValue();
   Vec2 Rotate(float radius, float angle);
   Vec2 RandomRotation(float radius);
 

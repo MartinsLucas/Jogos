@@ -24,7 +24,7 @@ public:
 
   void Render();
   void Render(int xPosition, int yPosition);
-  void Update(float delta);
+  void Update(float dt);
   void Open(const char *file);
   void SetClip(int x, int y, int width, int height);
   int GetWidth();

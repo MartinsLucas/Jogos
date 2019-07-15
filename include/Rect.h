@@ -4,30 +4,26 @@
 #include <iostream>
 #include <math.h>
 
+#include "Vec2.h"
+
 using namespace std;
 
 class Rect {
-private:
+public:
   int x;
   int y;
   int width;
   int height;
 
-public:
   Rect();
   Rect(int x, int y, int width, int height);
 
-  int GetXPosition();
-  int GetYPosition();
-  void SetXPosition(int position);
-  void SetYPosition(int position);
-  int GetHeight();
-  int GetWidth();
-  void SetWidth(int width);
-  void SetHeight(int height);
   bool Contains(float mouseX, float mouseY);
   bool WithinXLimits(float xPosition);
   bool WithinYLimits(float yPosition);
+
+  Vec2 GetCenter();
+  void SetCenter(Vec2 center);
   /*
   Basic vector operations such as:
     Sum and subtraction

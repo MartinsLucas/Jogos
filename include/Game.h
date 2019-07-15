@@ -14,19 +14,32 @@ using namespace std;
 
 class Game {
 private:
-  static Game *instance;
+  float dt;
+  int frameStart;
+  State *state;
   SDL_Window *window;
   SDL_Renderer *renderer;
-  State *state;
+
+  static Game *instance;
 
   Game(const char *title, int width, int height);
 
+  void CalculateDeltaTime();
+
 public:
+  static int screenWidth;
+  static int screenHeight;
+
   ~Game();
 
   void Run();
-  SDL_Renderer *GetRenderer();
   State &GetState();
+  SDL_Renderer *GetRenderer();
   static Game &GetInstance();
+
+  float GetDeltaTime();
+
+  static int GetScreenWidth();
+  static int GetScreenHeight();
 };
 #endif
