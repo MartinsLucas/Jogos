@@ -19,6 +19,8 @@ private:
   SDL_Rect clipRect;
   SDL_Texture *texture;
 
+  Vec2 scale;
+
 public:
   Sprite(GameObject &associated);
   Sprite(GameObject &associated, const char *file);
@@ -33,5 +35,7 @@ public:
   int GetHeight();
   bool IsOpen();
   bool Is(const char *type);
+  Vec2 GetScale();
+  void SetScaleX(float scaleX, float scaleY);
 };
 #endif

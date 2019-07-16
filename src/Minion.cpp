@@ -14,6 +14,7 @@
 Minion::Minion(GameObject &associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDegr) : Component(associated), alienCenter(*alienCenter.lock().get()) {
   this->arc = arcOffsetDegr;
   Sprite *sprite = new Sprite(associated, "assets/img/minion.png");
+
   associated.AddComponent(sprite);
 
   Vec2 initialPosition = this->alienCenter.box.GetCenter().Rotate(MINIONS_DISTANCE, arcOffsetDegr);

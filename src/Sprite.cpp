@@ -4,11 +4,13 @@
 
 Sprite::Sprite(GameObject& associated) : Component(associated) {
   this->texture = nullptr;
+  this->scale = Vec2(1, 1);
   this->associated.angleDeg = 0;
 }
 
 Sprite::Sprite(GameObject& associated, const char *file) : Component(associated) {
   this->texture = nullptr;
+  this->scale = Vec2(1, 1);
   this->associated.angleDeg = 0;
   this->Open(file);
 }
@@ -24,8 +26,8 @@ void Sprite::Render(int xPosition, int yPosition) {
   SDL_Rect destineRect = SDL_Rect {
     xPosition,
     yPosition,
-    this->clipRect.w,
-    this->clipRect.h
+    (int)(this->clipRect.w * this->scale.x),
+    (int)(this->clipRect.h * this->scale.y)
   };
 
   if (
@@ -42,6 +44,20 @@ void Sprite::Render(int xPosition, int yPosition) {
     printf("Couldn't render sprite!\n");
     printf("%s\n", SDL_GetError());
   }
+}
+
+void Sprite::SetScaleX(float scaleX, float scaleY) {
+  this->scale = Vec2(scaleX, scaleY);
+
+  Vec2 center = this->associated.box.GetCenter();
+  this->associated.box.width = this->GetWidth();
+  this->associated.box.height = this->GetHeight();
+  this->associated.box.x = center.x - this->associated.box.width / 2;
+  this->associated.box.y = center.y - this->associated.box.height / 2;
+}
+
+Vec2 Sprite::GetScale() {
+  return(this->scale);
 }
 
 void Sprite::Update(float dt) {}
@@ -68,11 +84,11 @@ void Sprite::SetClip(int x, int y, int width, int height) {
 }
 
 int Sprite::GetWidth() {
-  return(this->width);
+  return(this->width * this->scale.x);
 }
 
 int Sprite::GetHeight() {
-  return(this->height);
+  return(this->height * this->scale.y);
 }
 
 bool Sprite::IsOpen() {
