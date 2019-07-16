@@ -17,15 +17,19 @@ private:
 
 public:
   Rect box;
+  bool started;
+  double angleDeg;
 
   GameObject();
 
   ~GameObject();
 
-  void Update(float dt);
-  void Render();
   bool IsDead();
+
+  void Start();
+  void Render();
   void RequestDelete();
+  void Update(float dt);
   void AddComponent(Component *component);
   void RemoveComponent(Component *component);
   Component *GetComponent(const char *type);

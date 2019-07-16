@@ -37,7 +37,7 @@ void TileMap::SetTileSet(TileSet* tileSet) {
   this->tileSet = tileSet;
 }
 
-void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
+void TileMap::RenderLayer(int layer, float cameraX, float cameraY) {
   for (int j = 0 ; j < this->mapHeight ; j++) {
     for (int i = 0 ; i < this->mapWidth ; i++) {
       this->tileSet->RenderTile(
@@ -75,6 +75,8 @@ int& TileMap::At(int i, int j, int k) {
 }
 
 void TileMap::Update(float dt) {}
+
+void TileMap::Start() {}
 
 bool TileMap::Is(const char *type) {
   if (strcmp(type, "TileMap") == 0) {

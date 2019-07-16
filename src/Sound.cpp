@@ -57,6 +57,8 @@ bool Sound::IsOpen() {
   }
 }
 
+void Sound::Start() {}
+
 bool Sound::Is(const char *type) {
   if (strcmp(type, "Sound") == 0) {
     return(true);

@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+#include "Vec2.h"
 #include "Component.h"
 #include "Resources.h"
 
@@ -13,15 +14,18 @@ using namespace std;
 
 class Sprite : public Component {
 private:
-  SDL_Texture *texture;
-  SDL_Rect clipRect;
   int width;
   int height;
+  SDL_Rect clipRect;
+  SDL_Texture *texture;
+
+  Vec2 scale;
 
 public:
   Sprite(GameObject &associated);
   Sprite(GameObject &associated, const char *file);
 
+  void Start();
   void Render();
   void Render(int xPosition, int yPosition);
   void Update(float dt);
@@ -31,5 +35,7 @@ public:
   int GetHeight();
   bool IsOpen();
   bool Is(const char *type);
+  Vec2 GetScale();
+  void SetScaleX(float scaleX, float scaleY);
 };
 #endif

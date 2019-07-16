@@ -13,6 +13,7 @@ class CameraFollower : public Component {
 public:
   CameraFollower(GameObject &gameObject);
 
+  void Start();
   void Render();
   void Update(float dt);
   bool Is(const char *type);

@@ -10,7 +10,6 @@
 
 #include "Vec2.h"
 #include "Sprite.h"
-#include "Face.h"
 #include "Music.h"
 #include "Sound.h"
 #include "TileSet.h"
@@ -23,6 +22,7 @@ using namespace std;
 class State {
 private:
   Music music;
+  bool started;
   bool quitRequested;
   std::vector<std::shared_ptr<GameObject>> objectArray;
 
@@ -30,11 +30,16 @@ public:
   State();
   ~State();
 
+  void Start();
   void Input();
   void Render();
   void LoadAssets();
+  void LoadEnemies();
   void Update(float dt);
-  void AddObject(int mouseX, int mouseY);
+
   bool QuitRequested();
+
+  std::weak_ptr<GameObject> AddObject(GameObject *gameObject);
+  std::weak_ptr<GameObject> GetObjectPtr(GameObject *gameObject);
 };
 #endif

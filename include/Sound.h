@@ -22,6 +22,7 @@ public:
   ~Sound();
 
   void Stop();
+  void Start();
   void Render();
   void Update(float dt);
   void Play(int times = 1);

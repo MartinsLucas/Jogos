@@ -12,20 +12,29 @@ using namespace std;
 
 class Vec2 {
 public:
-  int x;
-  int y;
+  float x;
+  float y;
 
   Vec2();
-  Vec2(int x, int y);
+  Vec2(float x, float y);
 
-  Vec2 Rotate(float radius, float angle);
+
+  float GetAngle(Vec2 target);
+  float GetDistance(Vec2 target);
+
+  Vec2 GetDelta(Vec2 target);
   Vec2 RandomRotation(float radius);
+  Vec2 Rotate(float radius, float angle);
+  Vec2 GetDisplacementSpeed(Vec2 target, float velocity);
+
+  static Vec2 GetSpeed(float angle);
 
   Vec2 operator+(const Vec2 &vec2);
   Vec2 operator+(const float &constant);
   Vec2 operator-(const Vec2 &vec2);
   Vec2 operator-(const float &constant);
   Vec2 operator*(const float &constant);
+
   /*
   Basic vector operations such as:
     Magnitude

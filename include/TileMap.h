@@ -21,11 +21,12 @@ private:
 public:
   TileMap(GameObject &associated, const char *file, TileSet *tileSet);
 
+  void Start();
   void Render();
   void Update(float dt = 0);
   void Load(const char *file);
   void SetTileSet(TileSet *tileSet);
-  void RenderLayer(int layer, int cameraX = 0, int cameraY = 0);
+  void RenderLayer(int layer, float cameraX = 0, float cameraY = 0);
   int GetDepth();
   int GetWidth();
   int GetHeight();

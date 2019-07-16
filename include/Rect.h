@@ -10,13 +10,13 @@ using namespace std;
 
 class Rect {
 public:
-  int x;
-  int y;
-  int width;
-  int height;
+  float x;
+  float y;
+  float width;
+  float height;
 
   Rect();
-  Rect(int x, int y, int width, int height);
+  Rect(float x, float y, float width, float height);
 
   bool Contains(float mouseX, float mouseY);
   bool WithinXLimits(float xPosition);

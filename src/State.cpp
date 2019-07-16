@@ -1,14 +1,36 @@
 #include "State.h"
+#include "Alien.h"
 #include "Camera.h"
 #include "CameraFollower.h"
 
+#include <memory>
+
 State::State() : music("assets/audio/stageState.ogg") {
   this->quitRequested = false;
-  this->music.Play(-1);
+  this->started = false;
+  // this->music.Play(-1);
 
   this->objectArray = std::vector<std::shared_ptr<GameObject>>();
+}
 
+void State::LoadEnemies() {
+  GameObject *alienGameObject = new GameObject();
+
+  alienGameObject->AddComponent(new Alien(*alienGameObject, 6));
+  alienGameObject->box.SetCenter(Vec2(512.0, 300.0));
+  this->AddObject(alienGameObject);
+
+  Camera::Follow(alienGameObject);
+}
+
+void State::Start() {
   this->LoadAssets();
+  this->LoadEnemies();
+
+  for(auto &object : this->objectArray) {
+    object->Start();
+  }
+  this->started = true;
 }
 
 State::~State() {
@@ -36,7 +58,7 @@ void State::LoadAssets() {
 
   spriteObject->AddComponent(backgroundSprite);
   spriteObject->AddComponent(background);
-  this->objectArray.emplace_back(spriteObject);
+  this->AddObject(spriteObject);
 
   GameObject *tileMapObject = new GameObject();
   TileSet *tileSet = new TileSet(64, 64, "assets/img/tileset.png");
@@ -47,7 +69,7 @@ void State::LoadAssets() {
   tileMapObject->box.y = 0;
 
   tileMapObject->AddComponent(tileMap);
-  this->objectArray.emplace_back(tileMapObject);
+  this->AddObject(tileMapObject);
 }
 
 void State::Update(float dt) {
@@ -60,17 +82,10 @@ void State::Update(float dt) {
 
   Camera::Update(dt);
 
-  if(InputManager::GetInstance().KeyPress(SPACE_BAR)) {
-    Vec2 objectPosition = Vec2(
-      InputManager::GetInstance().GetMouseX() + Camera::position.x,
-      InputManager::GetInstance().GetMouseY() + Camera::position.y
-    ).RandomRotation( 200 );
-    AddObject((int)objectPosition.x, (int)objectPosition.y);
-  }
-
   for(auto &object : this->objectArray) {
     object->Update(dt);
   }
+
   for(unsigned int index = 0 ; (index < this->objectArray.size()) ; index++) {
     if (this->objectArray[index].get()->IsDead()) {
       this->objectArray.erase(this->objectArray.begin() + index);
@@ -78,22 +93,23 @@ void State::Update(float dt) {
   }
 }
 
-void State::AddObject(int mouseX, int mouseY) {
-  GameObject *object = new GameObject();
-  Sprite *sprite = new Sprite(*object, "assets/img/penguinface.png");
-  Sound *sound = new Sound(*object, "assets/audio/boom.wav");
-  Face *face = new Face(*object);
+std::weak_ptr<GameObject> State::AddObject(GameObject *gameObject) {
+  std::shared_ptr<GameObject> sharedGameObject = std::shared_ptr<GameObject>(gameObject);
+  this->objectArray.push_back(sharedGameObject);
+  if (this->started) {
+    sharedGameObject->Start();
+  }
+  return(std::weak_ptr<GameObject>(sharedGameObject));
+}
 
-  object->box.width = sprite->GetWidth();
-  object->box.height = sprite->GetHeight();
-  object->box.x = mouseX - (sprite->GetWidth() / 2);
-  object->box.y = mouseY - (sprite->GetHeight() / 2);
-
-  object->AddComponent(sprite);
-  object->AddComponent(sound);
-  object->AddComponent(face);
-
-  this->objectArray.emplace_back(object);
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *gameObject) {
+  std::weak_ptr<GameObject> weakGameObject = std::weak_ptr<GameObject>();
+  for (unsigned i = 0; i < this->objectArray.size(); i++) {
+    if (this->objectArray[i].get() == gameObject) {
+      weakGameObject = std::weak_ptr<GameObject>(this->objectArray[i]);
+    }
+  }
+  return(weakGameObject);
 }
 
 bool State::QuitRequested() {

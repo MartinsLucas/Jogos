@@ -6,6 +6,15 @@
 GameObject::GameObject() {
   this->isDead = false;
   this->box = Rect();
+  this->started = false;
+  this->angleDeg = 0;
+}
+
+void GameObject::Start() {
+  for(auto &component : this->components) {
+    component->Start();
+  }
+  this->started = true;
 }
 
 GameObject::~GameObject() {
