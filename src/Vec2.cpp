@@ -1,6 +1,6 @@
 #include "Vec2.h"
 
-#include <cmath>
+#include <math.h>
 
 Vec2::Vec2() {
   this->x = 0;
@@ -43,6 +43,15 @@ Vec2 Vec2::GetDisplacementSpeed(Vec2 target, float velocity) {
   } else {
     return Vec2();
   }
+}
+
+Vec2 Vec2::GetSpeed(float angle) {
+  return Vec2(cos(angle), sin(angle));
+}
+
+float Vec2::GetAngle(Vec2 target) {
+  Vec2 delta = this->GetDelta(target);
+  return(atan2(delta.y, delta.x));
 }
 
 Vec2 Vec2::operator+(const Vec2 &vec2) {

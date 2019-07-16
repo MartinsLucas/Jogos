@@ -39,5 +39,6 @@ public:
   void Update(float dt);
   bool Is(const char *type);
   Vec2 MoveTo(Vec2 target, float dt);
+  GameObject& GetNearestMinion(Vec2 target);
 };
 #endif

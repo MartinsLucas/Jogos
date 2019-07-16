@@ -86,6 +86,10 @@ void Alien::Update(float dt) {
         break;
       }
       case Action::ActionType::SHOOT:
+        if(this->minionsAmount > 0){
+          Minion *minion = (Minion*) this->GetNearestMinion(task.position).GetComponent("Minion");
+          minion->Shoot(task.position);
+        }
         taskQueue.pop();
         break;
       default:
@@ -95,6 +99,21 @@ void Alien::Update(float dt) {
   if(this->hp <= 0) {
     this->associated.RequestDelete();
   }
+}
+
+GameObject& Alien::GetNearestMinion(Vec2 target) {
+  GameObject *nearestMinion = this->minionArray.front().lock().get();
+
+  for(auto &minion : this->minionArray) {
+    GameObject *currentMinion = minion.lock().get();
+    if(
+      currentMinion->box.GetCenter().GetDistance(target)
+      < nearestMinion->box.GetCenter().GetDistance(target)
+    ) {
+      nearestMinion = currentMinion;
+    }
+  }
+  return(*nearestMinion);
 }
 
 Vec2 Alien::MoveTo(Vec2 target, float dt) {

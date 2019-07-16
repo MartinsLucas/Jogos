@@ -15,10 +15,9 @@ State::State() : music("assets/audio/stageState.ogg") {
 
 void State::LoadEnemies() {
   GameObject *alienGameObject = new GameObject();
+
   alienGameObject->AddComponent(new Alien(*alienGameObject, 6));
-
   alienGameObject->box.SetCenter(Vec2(512.0, 300.0));
-
   this->AddObject(alienGameObject);
 
   Camera::Follow(alienGameObject);
@@ -27,6 +26,7 @@ void State::LoadEnemies() {
 void State::Start() {
   this->LoadAssets();
   this->LoadEnemies();
+
   for(auto &object : this->objectArray) {
     object->Start();
   }
