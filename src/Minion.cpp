@@ -15,6 +15,9 @@ Minion::Minion(GameObject &associated, std::weak_ptr<GameObject> alienCenter, fl
   this->arc = arcOffsetDegr;
   Sprite *sprite = new Sprite(associated, "assets/img/minion.png");
 
+  float randomScale = (0.1 * (std::rand() % 6)) + 1;
+  sprite->SetScaleX(randomScale, randomScale);
+
   associated.AddComponent(sprite);
 
   Vec2 initialPosition = this->alienCenter.box.GetCenter().Rotate(MINIONS_DISTANCE, arcOffsetDegr);
