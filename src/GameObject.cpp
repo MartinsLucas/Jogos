@@ -7,6 +7,7 @@ GameObject::GameObject() {
   this->isDead = false;
   this->box = Rect();
   this->started = false;
+  this->angleDeg = 0;
 }
 
 void GameObject::Start() {

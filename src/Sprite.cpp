@@ -4,10 +4,12 @@
 
 Sprite::Sprite(GameObject& associated) : Component(associated) {
   this->texture = nullptr;
+  this->associated.angleDeg = 0;
 }
 
 Sprite::Sprite(GameObject& associated, const char *file) : Component(associated) {
   this->texture = nullptr;
+  this->associated.angleDeg = 0;
   this->Open(file);
 }
 
@@ -27,11 +29,14 @@ void Sprite::Render(int xPosition, int yPosition) {
   };
 
   if (
-    SDL_RenderCopy(
+    SDL_RenderCopyEx(
       Game::GetInstance().GetRenderer(),
       this->texture,
       &(this->clipRect),
-      &destineRect
+      &destineRect,
+      this->associated.angleDeg,
+      nullptr,
+      SDL_FLIP_NONE
     ) != 0
   ) {
     printf("Couldn't render sprite!\n");

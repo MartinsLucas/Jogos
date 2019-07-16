@@ -29,7 +29,8 @@ void Minion::Render() {}
 
 void Minion::Update(float dt) {
   this->arc += SPEED;
-  if(&this->alienCenter != nullptr){
+  this->associated.angleDeg = (this->arc * 180/PI);
+  if(&this->alienCenter != nullptr) {
     Vec2 position = this->alienCenter.box.GetCenter().Rotate(200, this->arc);
     associated.box.SetCenter(position);
   } else {

@@ -1,5 +1,6 @@
 #define HP 30
-#define SPEED 250
+#define ROTATION_SPEED -PI/300
+#define MOVEMENT_SPEED 250
 #define TOLERANCE 1e-5
 #define PI 3.1415926535
 
@@ -45,6 +46,7 @@ void Alien::Start() {
       alienCenter,
       (2 * PI / this->minionsAmount) * i
     ));
+
     this->minionArray.push_back(Game::GetInstance().GetState().AddObject(minionGameObject));
   }
 }
@@ -52,6 +54,7 @@ void Alien::Start() {
 void Alien::Render() {}
 
 void Alien::Update(float dt) {
+  this->associated.angleDeg += ROTATION_SPEED * 180/PI;
   if(InputManager::GetInstance().MousePress(LEFT_MOUSE_BUTTON)) {
     this->taskQueue.push(
       Action(
@@ -118,7 +121,7 @@ GameObject& Alien::GetNearestMinion(Vec2 target) {
 
 Vec2 Alien::MoveTo(Vec2 target, float dt) {
   Vec2 alienPosition = this->associated.box.GetCenter();
-  this->speed = alienPosition.GetDisplacementSpeed(target, SPEED);
+  this->speed = alienPosition.GetDisplacementSpeed(target, MOVEMENT_SPEED);
 
   if(
     (alienPosition.x + this->speed.x * dt > target.x && target.x > alienPosition.x)

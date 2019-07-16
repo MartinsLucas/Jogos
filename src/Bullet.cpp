@@ -1,3 +1,5 @@
+#define PI 3.1415926535
+
 #include "Game.h"
 #include "Alien.h"
 #include "Bullet.h"
@@ -8,12 +10,13 @@
 
 #include <memory>
 
-Bullet::Bullet(GameObject &associated, float angle, float speed, int damage, float maxDistance, const char* sprite) : Component (associated){
+Bullet::Bullet(GameObject &associated, float angle, float speed, int damage, float maxDistance, const char* sprite) : Component (associated) {
   Sprite *bulletSprite = new Sprite(associated, sprite);
   associated.AddComponent(bulletSprite);
 
   associated.box.width = bulletSprite->GetWidth();
   associated.box.height = bulletSprite->GetHeight();
+  this->associated.angleDeg = angle * 180 / PI;
 
   this->damage = damage;
   this->speed = Vec2::GetSpeed(angle) * speed;
