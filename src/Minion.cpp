@@ -45,7 +45,7 @@ void Minion::Update(float dt) {
 void Minion::Shoot(Vec2 target) {
   GameObject *bulletGameObject = new GameObject();
   float speed = this->associated.box.GetCenter().GetAngle(target);
-  bulletGameObject->AddComponent(new Bullet(*bulletGameObject, speed, BULLET_SPEED, BULLET_SPEED, BULLET_MAX_DISTANCE, "assets/img/minionbullet1.png"));
+  bulletGameObject->AddComponent(new Bullet(*bulletGameObject, speed, BULLET_SPEED, BULLET_SPEED, BULLET_MAX_DISTANCE, "assets/img/minionbullet2.png"));
   bulletGameObject->box.SetCenter(this->associated.box.GetCenter());
 
   Game::GetInstance().GetState().AddObject(bulletGameObject);

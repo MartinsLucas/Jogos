@@ -11,7 +11,7 @@
 #include <memory>
 
 Bullet::Bullet(GameObject &associated, float angle, float speed, int damage, float maxDistance, const char* sprite) : Component (associated) {
-  Sprite *bulletSprite = new Sprite(associated, sprite);
+  Sprite *bulletSprite = new Sprite(associated, sprite, 3, 0.1);
   associated.AddComponent(bulletSprite);
 
   associated.box.width = bulletSprite->GetWidth();
