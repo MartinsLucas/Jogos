@@ -89,7 +89,7 @@ void Alien::Update(float dt) {
         break;
       }
       case Action::ActionType::SHOOT:
-        if(this->minionsAmount > 0){
+        if(this->minionsAmount > 0) {
           Minion *minion = (Minion*) this->GetNearestMinion(task.position).GetComponent("Minion");
           minion->Shoot(task.position);
         }

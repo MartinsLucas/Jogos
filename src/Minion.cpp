@@ -2,7 +2,7 @@
 #define SPEED PI/120
 
 #define MINIONS_DISTANCE 160
-#define BULLET_SPEED 450
+#define BULLET_SPEED 600
 #define BULLET_DAMAGE 25
 #define BULLET_MAX_DISTANCE 500
 
@@ -44,8 +44,8 @@ void Minion::Update(float dt) {
 
 void Minion::Shoot(Vec2 target) {
   GameObject *bulletGameObject = new GameObject();
-  float speed = this->associated.box.GetCenter().GetAngle(target);
-  bulletGameObject->AddComponent(new Bullet(*bulletGameObject, speed, BULLET_SPEED, BULLET_SPEED, BULLET_MAX_DISTANCE, "assets/img/minionbullet2.png"));
+  float angle = this->associated.box.GetCenter().GetAngle(target);
+  bulletGameObject->AddComponent(new Bullet(*bulletGameObject, angle, BULLET_SPEED, BULLET_DAMAGE, BULLET_MAX_DISTANCE, "assets/img/minionbullet2.png"));
   bulletGameObject->box.SetCenter(this->associated.box.GetCenter());
 
   Game::GetInstance().GetState().AddObject(bulletGameObject);

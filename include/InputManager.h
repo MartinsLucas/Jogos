@@ -10,6 +10,11 @@
 #define SPACE_BAR SDLK_SPACE
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
+#define W_KEY SDLK_w
+#define A_KEY SDLK_a
+#define S_KEY SDLK_s
+#define D_KEY SDLK_d
+
 
 #include "SDL_include.h"
 

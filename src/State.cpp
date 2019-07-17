@@ -1,6 +1,8 @@
 #include "State.h"
 #include "Alien.h"
 #include "Camera.h"
+#include "PenguinBody.h"
+#include "PenguinCannon.h"
 #include "CameraFollower.h"
 
 #include <memory>
@@ -19,12 +21,28 @@ void State::LoadEnemies() {
   alienGameObject->AddComponent(new Alien(*alienGameObject, 6));
   alienGameObject->box.SetCenter(Vec2(512.0, 300.0));
   this->AddObject(alienGameObject);
+}
 
-  Camera::Follow(alienGameObject);
+void State::LoadPlayables() {
+  GameObject *penguinGameObject = new GameObject();
+
+  penguinGameObject->AddComponent(new PenguinBody(*penguinGameObject));
+  penguinGameObject->box.SetCenter(Vec2(704.0, 640.0));
+
+  // FIXME!
+  // this->AddObject(penguinGameObject);
+
+  GameObject *penguinCannonGameObject = new GameObject();
+
+  penguinCannonGameObject->AddComponent(new PenguinCannon(*penguinCannonGameObject, this->AddObject(penguinGameObject)));
+  this->AddObject(penguinCannonGameObject);
+
+  Camera::Follow(penguinGameObject);
 }
 
 void State::Start() {
   this->LoadAssets();
+  this->LoadPlayables();
   this->LoadEnemies();
 
   for(auto &object : this->objectArray) {

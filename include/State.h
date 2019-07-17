@@ -35,6 +35,7 @@ public:
   void Render();
   void LoadAssets();
   void LoadEnemies();
+  void LoadPlayables();
   void Update(float dt);
 
   bool QuitRequested();

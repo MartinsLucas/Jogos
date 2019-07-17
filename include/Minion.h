@@ -15,7 +15,7 @@ private:
   GameObject& alienCenter;
 
 public:
-  Minion(GameObject &associated, std::weak_ptr<GameObject>, float arcOffsetDegr = 0);
+  Minion(GameObject &associated, std::weak_ptr<GameObject> alienCenter, float arcOffsetDegr = 0);
 
   void Start();
   void Render();
